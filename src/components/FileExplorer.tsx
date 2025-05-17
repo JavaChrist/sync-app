@@ -2,16 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { db, storage } from '../firebaseConfig';
 import { collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage';
-import Breadcrumb from './Breadcrumb';
-import FolderList from './FolderList';
-import FileList from './FileList';
-import SearchBar from './SearchBar';
+import Breadcrumb from '../components/Breadcrumb';
+import FolderList from '../components/FolderList';
+import FileList from '../components/FileList';
+import SearchBar from '../components/SearchBar';
 import { FolderType, FileType } from '../types/documentTypes';
-import UploadButton from './UploadButton';
+import UploadButton from '../components/UploadButton';
 
 interface FileExplorerProps {
   userId: string;
 }
+
+type SortField = 'nom' | 'type' | 'taille' | 'dateUpload';
+type SortDirection = 'asc' | 'desc';
+type ViewMode = 'list' | 'grid';
 
 const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
   const [currentPath, setCurrentPath] = useState<string>('');
@@ -24,6 +28,9 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<FileType[]>([]);
   const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [sortField, setSortField] = useState<SortField>('nom');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
 
   // Fonction pour charger les dossiers et fichiers du chemin actuel
   useEffect(() => {
@@ -92,6 +99,39 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
     loadFoldersAndFiles();
   }, [currentPath]);
 
+  // Fonction pour trier les fichiers
+  const sortFiles = (filesToSort: FileType[]): FileType[] => {
+    return [...filesToSort].sort((a, b) => {
+      // Gérer les valeurs potentiellement undefined
+      const aValue = a[sortField] || '';
+      const bValue = b[sortField] || '';
+      
+      // Traitement spécial pour les dates
+      if (sortField === 'dateUpload') {
+        const dateA = aValue instanceof Date ? aValue : new Date(aValue);
+        const dateB = bValue instanceof Date ? bValue : new Date(bValue);
+        return sortDirection === 'asc' 
+          ? dateA.getTime() - dateB.getTime()
+          : dateB.getTime() - dateA.getTime();
+      }
+      
+      // Tri numérique pour la taille
+      if (sortField === 'taille') {
+        return sortDirection === 'asc' 
+          ? Number(aValue) - Number(bValue)
+          : Number(bValue) - Number(aValue);
+      }
+      
+      // Tri alphabétique pour le reste
+      const strA = String(aValue).toLowerCase();
+      const strB = String(bValue).toLowerCase();
+      
+      return sortDirection === 'asc'
+        ? strA.localeCompare(strB)
+        : strB.localeCompare(strA);
+    });
+  };
+
   // Fonction pour naviguer vers un dossier
   const handleFolderClick = (folder: FolderType) => {
     setCurrentPath(folder.path);
@@ -100,6 +140,23 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
   // Fonction pour revenir au dossier parent
   const handleBreadcrumbClick = (path: string) => {
     setCurrentPath(path);
+  };
+
+  // Fonction pour changer le mode d'affichage
+  const toggleViewMode = () => {
+    setViewMode(prev => prev === 'list' ? 'grid' : 'list');
+  };
+
+  // Fonction pour changer le tri
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      // Si on clique sur le même champ, inverser la direction
+      setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+    } else {
+      // Sinon, changer le champ et réinitialiser la direction
+      setSortField(field);
+      setSortDirection('asc');
+    }
   };
 
   // Fonction pour créer un nouveau dossier
@@ -466,6 +523,9 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
     setSearchQuery('');
   };
 
+  // Appliquer le tri aux fichiers affichés
+  const displayedFiles = isSearching ? sortFiles(searchResults) : sortFiles(files);
+
   return (
     <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md">
       {error && <div className="mb-4 p-3 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 rounded">{error}</div>}
@@ -484,6 +544,22 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
         
         {/* Boutons d'action */}
         <div className="flex space-x-2">
+          <button
+            onClick={toggleViewMode}
+            className="text-gray-700 dark:text-gray-300 p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 focus:outline-none"
+            title={viewMode === 'list' ? 'Vue grille' : 'Vue liste'}
+          >
+            {viewMode === 'list' ? (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+              </svg>
+            ) : (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+              </svg>
+            )}
+          </button>
+          
           <NewFolderButton onCreateFolder={handleCreateFolder} />
           <UploadButton onFileUpload={handleFileUpload} />
         </div>
@@ -520,6 +596,53 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
             </div>
           </div>
         </>
+      )}
+      
+      {/* Options de tri */}
+      {!isLoading && (displayedFiles.length > 0) && (
+        <div className="mb-4 flex flex-wrap items-center gap-2">
+          <span className="text-sm text-gray-600 dark:text-gray-400">Trier par:</span>
+          <button 
+            onClick={() => handleSort('nom')}
+            className={`px-3 py-1 text-sm rounded ${
+              sortField === 'nom' 
+                ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' 
+                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+            }`}
+          >
+            Nom {sortField === 'nom' && (sortDirection === 'asc' ? '↑' : '↓')}
+          </button>
+          <button 
+            onClick={() => handleSort('type')}
+            className={`px-3 py-1 text-sm rounded ${
+              sortField === 'type' 
+                ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' 
+                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+            }`}
+          >
+            Type {sortField === 'type' && (sortDirection === 'asc' ? '↑' : '↓')}
+          </button>
+          <button 
+            onClick={() => handleSort('taille')}
+            className={`px-3 py-1 text-sm rounded ${
+              sortField === 'taille' 
+                ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' 
+                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+            }`}
+          >
+            Taille {sortField === 'taille' && (sortDirection === 'asc' ? '↑' : '↓')}
+          </button>
+          <button 
+            onClick={() => handleSort('dateUpload')}
+            className={`px-3 py-1 text-sm rounded ${
+              sortField === 'dateUpload' 
+                ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' 
+                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+            }`}
+          >
+            Date {sortField === 'dateUpload' && (sortDirection === 'asc' ? '↑' : '↓')}
+          </button>
+        </div>
       )}
       
       {/* Affichage du titre de recherche si en mode recherche */}
@@ -561,17 +684,19 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
           {/* En mode recherche, afficher les résultats de recherche */}
           {isSearching ? (
             <FileList 
-              files={searchResults}
+              files={displayedFiles}
               uploadProgress={{}}
               onFileDownload={handleFileDownload}
               onFileDelete={handleFileDelete}
+              viewMode={viewMode}
             />
           ) : (
             <FileList 
-              files={files}
+              files={displayedFiles}
               uploadProgress={uploadProgress}
               onFileDownload={handleFileDownload}
               onFileDelete={handleFileDelete}
+              viewMode={viewMode}
             />
           )}
         </>
