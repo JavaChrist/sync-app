@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom'; // Supprimé car navigate n'est plus utilisé
 import { auth, db } from '../firebaseConfig';
 import { signOut, sendPasswordResetEmail, deleteUser } from 'firebase/auth';
-import { doc, getDoc, setDoc, collection, query, where, getDocs, deleteDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, collection, query, where, getDocs, deleteDoc, orderBy, limit, Timestamp } from "firebase/firestore";
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import ThemeToggle from '../components/ThemeToggle';
 
@@ -13,6 +13,31 @@ interface UserData {
   motDePasseProvisoireActif?: boolean;
   id?: string; // Ajout de l'id pour la gestion des utilisateurs
   // Ajoute d'autres champs si nécessaire
+}
+
+interface FileData {
+  id: string;
+  nom: string;
+  type: string;
+  taille: number;
+  dateCreation: Timestamp;
+  url: string;
+  path: string;
+}
+
+interface FolderData {
+  id: string;
+  nom: string;
+  path: string;
+  niveau: number;
+  dateCreation: Timestamp;
+}
+
+interface DashboardStats {
+  totalFiles: number;
+  totalFolders: number;
+  totalSize: number;
+  lastUploadDate: Date | null;
 }
 
 const DashboardPage: React.FC = () => {
@@ -37,6 +62,17 @@ const DashboardPage: React.FC = () => {
   const [deleteSuccess, setDeleteSuccess] = useState<string>('');
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState<boolean>(false);
+
+  // États pour le tableau de bord
+  const [recentFiles, setRecentFiles] = useState<FileData[]>([]);
+  const [favoriteFolders, setFavoriteFolders] = useState<FolderData[]>([]);
+  const [stats, setStats] = useState<DashboardStats>({
+    totalFiles: 0,
+    totalFolders: 0,
+    totalSize: 0,
+    lastUploadDate: null
+  });
+  const [dashboardLoading, setDashboardLoading] = useState<boolean>(true);
 
   // Spécifier explicitement la région europe-west1 pour les fonctions
   const functions = getFunctions(undefined, "europe-west1");
@@ -63,6 +99,120 @@ const DashboardPage: React.FC = () => {
 
     fetchUserData();
   }, []); // Se déclenche une fois au montage
+
+  // Récupérer les données du tableau de bord
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      if (!auth.currentUser) return;
+      
+      try {
+        setDashboardLoading(true);
+        
+        // Récupérer les fichiers récents
+        const filesQuery = query(
+          collection(db, 'fichiers'),
+          orderBy('dateCreation', 'desc'),
+          limit(5)
+        );
+        
+        const filesSnapshot = await getDocs(filesQuery);
+        const filesData = filesSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        } as FileData));
+        
+        setRecentFiles(filesData);
+        
+        // Pour l'instant, on utilise les dossiers principaux comme "favoris"
+        // Plus tard, on implémentera une vraie fonctionnalité de favoris
+        const foldersQuery = query(
+          collection(db, 'dossiers'),
+          where('niveau', '==', 1),
+          limit(5)
+        );
+        
+        const foldersSnapshot = await getDocs(foldersQuery);
+        const foldersData = foldersSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        } as FolderData));
+        
+        setFavoriteFolders(foldersData);
+        
+        // Calculer les statistiques
+        const allFilesQuery = query(collection(db, 'fichiers'));
+        const allFoldersQuery = query(collection(db, 'dossiers'));
+        
+        const [allFilesSnapshot, allFoldersSnapshot] = await Promise.all([
+          getDocs(allFilesQuery),
+          getDocs(allFoldersQuery)
+        ]);
+        
+        let totalSize = 0;
+        let lastDate: Date | null = null;
+        
+        allFilesSnapshot.docs.forEach(doc => {
+          const data = doc.data();
+          if (data.taille) totalSize += data.taille;
+          
+          if (data.dateCreation) {
+            const fileDate = data.dateCreation instanceof Timestamp
+              ? data.dateCreation.toDate()
+              : new Date(data.dateCreation);
+              
+            if (!lastDate || fileDate > lastDate) {
+              lastDate = fileDate;
+            }
+          }
+        });
+        
+        setStats({
+          totalFiles: allFilesSnapshot.size,
+          totalFolders: allFoldersSnapshot.size,
+          totalSize: totalSize,
+          lastUploadDate: lastDate
+        });
+        
+        setDashboardLoading(false);
+      } catch (error) {
+        console.error("Erreur lors du chargement des données du tableau de bord:", error);
+        setDashboardLoading(false);
+      }
+    };
+    
+    fetchDashboardData();
+  }, []);
+
+  // Fonction pour formater la taille des fichiers
+  const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return '0 Bytes';
+    
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
+  // Fonction pour formater la date
+  const formatDate = (dateValue: any): string => {
+    if (!dateValue) return 'N/A';
+    
+    let date;
+    if (dateValue instanceof Timestamp) {
+      date = dateValue.toDate();
+    } else {
+      date = new Date(dateValue);
+    }
+    
+    return date.toLocaleDateString('fr-FR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
 
   const handleLogout = async () => {
     try {
@@ -295,12 +445,12 @@ const DashboardPage: React.FC = () => {
           )}
           
           {/* Lien vers la gestion documentaire */}
-          <a
-            href="/documents"
-            className="w-full text-left py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white block mb-2"
+          <div
+            onClick={() => window.location.href = "/documents"}
+            className="w-full text-left py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white block mb-2 cursor-pointer"
           >
             Gestion Documentaire
-          </a>
+          </div>
         </nav>
 
         {/* Bouton de déconnexion */}
@@ -312,20 +462,132 @@ const DashboardPage: React.FC = () => {
         </button>
       </div>
 
-      {/* Contenu Principal */}
-      <div className="flex-grow p-12 flex flex-col items-center bg-gray-100 dark:bg-gray-800">
-        <div className="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-md w-full max-w-4xl">
-          {userData && userData.nni && (
-            <p className="mb-6 text-gray-600 dark:text-gray-300">
-              <span className="text-blue-600 dark:text-blue-400 font-medium">NNI:</span> <span className="text-blue-600 dark:text-blue-400 font-medium">{userData.nni}</span>
-            </p>
-          )}
-
-          {/* Le contenu principal du dashboard est gardé vide pour le moment */}
+      {/* Contenu Principal - Tableau de bord */}
+      <div className="flex-grow p-6 overflow-auto">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Tableau de bord</h1>
+          <p className="text-gray-600 dark:text-gray-400">Bienvenue, {userData?.nni || 'Utilisateur'}</p>
         </div>
+
+        {dashboardLoading ? (
+          <div className="flex justify-center items-center h-64">
+            <p className="text-gray-600 dark:text-gray-400">Chargement des données...</p>
+          </div>
+        ) : (
+          <>
+            {/* Statistiques d'utilisation */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+              <div className="bg-white dark:bg-gray-750 p-6 rounded-lg shadow-md border-l-4 border-blue-500">
+                <h3 className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">Total des fichiers</h3>
+                <p className="text-2xl font-bold text-gray-800 dark:text-white">{stats.totalFiles}</p>
+              </div>
+              
+              <div className="bg-white dark:bg-gray-750 p-6 rounded-lg shadow-md border-l-4 border-green-500">
+                <h3 className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">Total des dossiers</h3>
+                <p className="text-2xl font-bold text-gray-800 dark:text-white">{stats.totalFolders}</p>
+              </div>
+              
+              <div className="bg-white dark:bg-gray-750 p-6 rounded-lg shadow-md border-l-4 border-purple-500">
+                <h3 className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">Espace utilisé</h3>
+                <p className="text-2xl font-bold text-gray-800 dark:text-white">{formatFileSize(stats.totalSize)}</p>
+              </div>
+              
+              <div className="bg-white dark:bg-gray-750 p-6 rounded-lg shadow-md border-l-4 border-yellow-500">
+                <h3 className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">Dernier téléversement</h3>
+                <p className="text-xl font-bold text-gray-800 dark:text-white">{stats.lastUploadDate ? formatDate(stats.lastUploadDate) : 'Aucun'}</p>
+              </div>
+            </div>
+
+            {/* Section des documents récents */}
+            <div className="bg-white dark:bg-gray-750 rounded-lg shadow-md mb-8">
+              <div className="border-b border-gray-200 dark:border-gray-700 p-6">
+                <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Documents récents</h2>
+              </div>
+              
+              <div className="p-6">
+                {recentFiles.length === 0 ? (
+                  <p className="text-gray-500 dark:text-gray-400 text-sm italic">Aucun document récent</p>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                      <thead>
+                        <tr>
+                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Nom</th>
+                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Type</th>
+                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Taille</th>
+                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
+                        </tr>
+                      </thead>
+                      <tbody className="bg-white dark:bg-gray-750 divide-y divide-gray-200 dark:divide-gray-700">
+                        {recentFiles.map(file => (
+                          <tr key={file.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <a 
+                                href={file.url} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-blue-600 dark:text-blue-400 hover:underline"
+                              >
+                                {file.nom}
+                              </a>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{file.type || 'Inconnu'}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{formatFileSize(file.taille)}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{formatDate(file.dateCreation)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+                <div className="mt-4 text-right">
+                  <span 
+                    onClick={() => window.location.href = "/documents"}
+                    className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium cursor-pointer"
+                  >
+                    Voir tous les documents &rarr;
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Section des dossiers favoris */}
+            <div className="bg-white dark:bg-gray-750 rounded-lg shadow-md">
+              <div className="border-b border-gray-200 dark:border-gray-700 p-6">
+                <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Dossiers principaux</h2>
+              </div>
+              
+              <div className="p-6">
+                {favoriteFolders.length === 0 ? (
+                  <p className="text-gray-500 dark:text-gray-400 text-sm italic">Aucun dossier</p>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {favoriteFolders.map(folder => (
+                      <div 
+                        key={folder.id}
+                        onClick={() => window.location.href = `/documents?path=${encodeURIComponent(folder.path)}`}
+                        className="bg-blue-50 dark:bg-gray-800 border-2 border-blue-100 dark:border-gray-700 rounded-lg shadow-md hover:shadow-lg p-4 transition-all duration-200 hover:bg-blue-100 dark:hover:bg-gray-750 flex items-start cursor-pointer"
+                      >
+                        <svg className="flex-shrink-0 w-7 h-7 text-yellow-500 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
+                        </svg>
+                        <div>
+                          <h3 className="text-blue-600 dark:text-blue-400 font-medium mb-1">{folder.nom}</h3>
+                          <p className="text-xs text-gray-600 dark:text-gray-400">
+                            Créé le: {formatDate(folder.dateCreation)}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </>
+        )}
       </div>
 
-      {/* Modale de suppression de compte */}
+      {/* Modales pour la création et suppression de comptes */}
       {isDeleteAccountModalOpen && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md mx-auto">
