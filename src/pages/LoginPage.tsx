@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebaseConfig';
 import { signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail } from "firebase/auth";
 import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
+import { useTheme } from '../context/ThemeContext';
 
 const LoginPage: React.FC = () => {
   const [nni, setNni] = useState<string>('');
@@ -12,6 +13,7 @@ const LoginPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [resetLoading, setResetLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { theme } = useTheme();
 
   // Rediriger si déjà connecté (ceci sera géré plus globalement dans App.tsx bientôt)
   useEffect(() => {
@@ -157,12 +159,19 @@ const LoginPage: React.FC = () => {
   });
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6 text-center text-gray-700">Connexion</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="nni" className="block text-sm font-medium text-gray-700 mb-1">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-blue-100 dark:from-gray-800 dark:to-gray-900">
+      <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-xl w-full max-w-md border border-blue-100 dark:border-gray-700">
+        {/* Logo et Titre */}
+        <div className="flex flex-col items-center mb-8">
+          <img src="/logo-edf.png" alt="Logo EDF" className="h-24 w-auto mb-4" />
+          <h1 className="text-3xl font-bold text-blue-600 dark:text-blue-400">Sync Pro</h1>
+          <p className="text-gray-600 dark:text-gray-300 mt-2">Gestion documentaire EDF</p>
+        </div>
+        
+        {/* Formulaire de connexion */}
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label htmlFor="nni" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               NNI
             </label>
             <input
@@ -170,14 +179,14 @@ const LoginPage: React.FC = () => {
               id="nni"
               value={nni}
               onChange={(e) => setNni(e.target.value.toUpperCase())}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm"
               placeholder="Entrez votre NNI"
               required
               disabled={loading || resetLoading}
             />
           </div>
-          <div className="mb-6">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Mot de passe
             </label>
             <input
@@ -185,31 +194,43 @@ const LoginPage: React.FC = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm"
               placeholder="Votre mot de passe"
               required
               disabled={loading || resetLoading}
             />
           </div>
-          {error && <p className="text-red-500 text-sm mb-4 text-center">{error}</p>}
-          {info && <p className="text-blue-500 text-sm mb-4 text-center">{info}</p>}
+          
+          {error && (
+            <div className="bg-red-50 dark:bg-red-900/30 border-l-4 border-red-500 p-4 rounded">
+              <p className="text-red-700 dark:text-red-400 text-sm">{error}</p>
+            </div>
+          )}
+          
+          {info && (
+            <div className="bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-500 p-4 rounded">
+              <p className="text-blue-700 dark:text-blue-400 text-sm">{info}</p>
+            </div>
+          )}
+          
           <button
             type="submit"
-            className={`w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
+            className={`w-full font-bold py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200 ${
               loading || resetLoading
                 ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                : 'bg-blue-600 hover:bg-blue-700 text-white'
             }`}
             disabled={loading || resetLoading}
           >
             {loading ? 'Connexion en cours...' : 'Se connecter'}
           </button>
         </form>
-        <div className="mt-4 text-center">
+        
+        <div className="mt-6 text-center border-t border-gray-200 dark:border-gray-700 pt-4">
           <button
             onClick={handlePasswordReset}
             disabled={resetLoading || loading}
-            className="text-sm text-indigo-600 hover:text-indigo-500 disabled:text-gray-400 disabled:cursor-not-allowed"
+            className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 disabled:text-gray-400 disabled:cursor-not-allowed transition-colors"
           >
             {resetLoading ? 'Envoi en cours...' : 'Mot de passe oublié ?'}
           </button>

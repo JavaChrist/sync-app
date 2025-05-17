@@ -17,8 +17,8 @@ const FolderList: React.FC<FolderListProps> = ({
 }) => {
   if (folders.length === 0) {
     return (
-      <div className="py-4 border-b border-gray-200">
-        <p className="text-gray-500 text-sm italic">Aucun dossier</p>
+      <div className="py-4 border-b border-gray-200 dark:border-gray-700">
+        <p className="text-gray-500 dark:text-gray-400 text-sm italic">Aucun dossier</p>
       </div>
     );
   }
@@ -39,22 +39,22 @@ const FolderList: React.FC<FolderListProps> = ({
 
   return (
     <div className="mb-8">
-      <h3 className="text-lg font-medium text-gray-700 mb-3">Dossiers</h3>
+      <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-3">Dossiers</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {folders.map(folder => (
           <div 
             key={folder.id}
-            className="border border-gray-200 rounded-lg p-3 hover:bg-gray-50 transition-colors flex flex-col min-w-0"
+            className="bg-blue-50 dark:bg-gray-800 border-2 border-blue-100 dark:border-gray-700 rounded-lg shadow-md hover:shadow-lg p-4 transition-all duration-200 hover:bg-blue-100 dark:hover:bg-gray-750 flex flex-col min-w-0"
           >
             <div className="flex flex-col items-start mb-2 w-full">
               {/* Titre et icône du dossier */}
-              <div className="flex items-center w-full mb-2">
-                <svg className="flex-shrink-0 w-6 h-6 text-yellow-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <div className="flex items-center w-full mb-3">
+                <svg className="flex-shrink-0 w-7 h-7 text-yellow-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                   <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
                 </svg>
                 <button 
                   onClick={() => onFolderClick(folder)} 
-                  className="text-blue-600 font-medium hover:underline text-left truncate max-w-full"
+                  className="text-blue-600 dark:text-blue-400 font-medium hover:underline text-left truncate max-w-full"
                   title={folder.nom}
                 >
                   {folder.nom}
@@ -62,18 +62,18 @@ const FolderList: React.FC<FolderListProps> = ({
               </div>
               
               {/* Info de date et niveau */}
-              <div className="text-xs text-gray-500 mb-2 w-full truncate">
+              <div className="text-xs text-gray-600 dark:text-gray-400 mb-3 w-full truncate">
                 Niveau: {folder.niveau} • Créé le: {formatDate(folder.dateCreation)}
               </div>
               
               {/* Boutons d'action */}
-              <div className="flex space-x-2 w-full justify-end">
+              <div className="flex space-x-2 w-full justify-end mt-auto">
                 <button 
                   onClick={(e) => {
                     e.stopPropagation();
                     onFolderRename(folder);
                   }}
-                  className="p-1 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded"
+                  className="p-1.5 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-blue-200 dark:hover:bg-gray-600 rounded-full"
                   title="Renommer ce dossier"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -86,7 +86,7 @@ const FolderList: React.FC<FolderListProps> = ({
                     e.stopPropagation();
                     onFolderDelete(folder);
                   }}
-                  className="p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded"
+                  className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900 dark:hover:text-red-300 rounded-full"
                   title="Supprimer ce dossier"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

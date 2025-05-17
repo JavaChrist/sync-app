@@ -95,35 +95,35 @@ const FileList: React.FC<FileListProps> = ({
   if (files.length === 0 && Object.keys(uploadProgress).length === 0) {
     return (
       <div className="py-4">
-        <p className="text-gray-500 text-sm italic">Aucun fichier</p>
+        <p className="text-gray-500 dark:text-gray-400 text-sm italic">Aucun fichier</p>
       </div>
     );
   }
 
   return (
     <div>
-      <h3 className="text-lg font-medium text-gray-700 mb-3">Fichiers</h3>
+      <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-3">Fichiers</h3>
       
       {/* Fichiers en cours d'upload */}
       {Object.keys(uploadProgress).length > 0 && (
         <div className="mb-6">
-          <h4 className="text-sm font-medium text-gray-700 mb-2">En cours d'upload</h4>
+          <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">En cours d'upload</h4>
           <div className="space-y-2">
             {Object.entries(uploadProgress).map(([fileName, progress]) => (
-              <div key={fileName} className="border border-gray-200 rounded p-3">
+              <div key={fileName} className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded p-3 shadow">
                 <div className="flex items-center mb-1">
                   <svg className="w-5 h-5 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                   </svg>
-                  <span className="text-sm">{fileName}</span>
+                  <span className="text-sm dark:text-gray-300">{fileName}</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2.5">
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
                   <div 
                     className="bg-blue-600 h-2.5 rounded-full" 
                     style={{ width: `${Math.min(progress, 100)}%` }}
                   ></div>
                 </div>
-                <p className="text-xs text-gray-500 mt-1">{Math.round(progress)}% terminé</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{Math.round(progress)}% terminé</p>
               </div>
             ))}
           </div>
@@ -132,53 +132,53 @@ const FileList: React.FC<FileListProps> = ({
       
       {/* Liste des fichiers */}
       {files.length > 0 && (
-        <div className="border rounded-lg overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+        <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-md">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead className="bg-gray-50 dark:bg-gray-800">
               <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                   Fichier
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                   Type
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                   Taille
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                   Date
                 </th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white dark:bg-gray-700 divide-y divide-gray-200 dark:divide-gray-600">
               {files.map(file => (
-                <tr key={file.id} className="hover:bg-gray-50">
+                <tr key={file.id} className="hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       {getFileIcon(file.type)}
                       <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">{file.nom}</div>
+                        <div className="text-sm font-medium text-gray-900 dark:text-white">{file.nom}</div>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="uppercase text-xs inline-block px-2 py-1 rounded-full bg-gray-100 text-gray-800">
+                    <span className="uppercase text-xs inline-block px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-600 text-gray-800 dark:text-gray-200">
                       {file.type}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
                     {formatFileSize(file.taille)}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
                     {formatDate(file.dateUpload)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button
                       onClick={() => onFileDownload(file)}
-                      className="text-blue-600 hover:text-blue-900 mr-4"
+                      className="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300 mr-4"
                       title="Télécharger"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -187,7 +187,7 @@ const FileList: React.FC<FileListProps> = ({
                     </button>
                     <button
                       onClick={() => onFileDelete(file)}
-                      className="text-red-600 hover:text-red-900"
+                      className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300"
                       title="Supprimer"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
