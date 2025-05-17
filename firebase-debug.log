@@ -1,0 +1,696 @@
+[debug] [2025-05-16T23:55:02.418Z] ----------------------------------------------------------------------
+[debug] [2025-05-16T23:55:02.421Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\conta\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2025-05-16T23:55:02.422Z] CLI Version:   14.4.0
+[debug] [2025-05-16T23:55:02.422Z] Platform:      win32
+[debug] [2025-05-16T23:55:02.422Z] Node Version:  v22.15.0
+[debug] [2025-05-16T23:55:02.422Z] Time:          Sat May 17 2025 01:55:02 GMT+0200 (heure d’été d’Europe centrale)
+[debug] [2025-05-16T23:55:02.422Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-05-16T23:55:02.568Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-05-16T23:55:02.569Z] > authorizing via signed-in user (contact@javachrist.fr)
+[debug] [2025-05-16T23:55:02.569Z] [iam] checking project sync-pro-fe572 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2025-05-16T23:55:02.570Z] Checked if tokens are valid: false, expires at: 1747440293523
+[debug] [2025-05-16T23:55:02.570Z] Checked if tokens are valid: false, expires at: 1747440293523
+[debug] [2025-05-16T23:55:02.570Z] > refreshing access token with scopes: []
+[debug] [2025-05-16T23:55:02.572Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-05-16T23:55:02.572Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-05-16T23:55:02.718Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-05-16T23:55:02.718Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-05-16T23:55:02.722Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions [none]
+[debug] [2025-05-16T23:55:02.722Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-16T23:55:02.722Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-05-16T23:55:03.376Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions 200
+[debug] [2025-05-16T23:55:03.376Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-05-16T23:55:03.377Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:03.377Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:03.377Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/sync-pro-fe572/serviceAccounts/sync-pro-fe572@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2025-05-16T23:55:03.377Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/sync-pro-fe572/serviceAccounts/sync-pro-fe572@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2025-05-16T23:55:04.052Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/sync-pro-fe572/serviceAccounts/sync-pro-fe572@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2025-05-16T23:55:04.052Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/sync-pro-fe572/serviceAccounts/sync-pro-fe572@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'sync-pro-fe572'...
+[info] 
+[info] i  deploying functions 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] Running command: npm --prefix "$RESOURCE_DIR" run build
+[info] +  functions: Finished running predeploy script. 
+[debug] [2025-05-16T23:55:10.113Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:10.114Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:10.114Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudresourcemanager.googleapis.com [none]
+[debug] [2025-05-16T23:55:10.114Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudresourcemanager.googleapis.com x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-16T23:55:10.957Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudresourcemanager.googleapis.com 200
+[debug] [2025-05-16T23:55:10.958Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudresourcemanager.googleapis.com [omitted]
+[debug] [2025-05-16T23:55:10.958Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:10.958Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:10.958Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572 [none]
+[debug] [2025-05-16T23:55:11.623Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572 200
+[debug] [2025-05-16T23:55:11.624Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572 {"projectNumber":"72872089595","projectId":"sync-pro-fe572","lifecycleState":"ACTIVE","name":"sync-pro","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-05-16T16:43:16.160470Z","parent":{"type":"organization","id":"294271354232"}}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[debug] [2025-05-16T23:55:11.626Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:11.626Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:11.626Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:11.626Z] Checked if tokens are valid: true, expires at: 1747443301718
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[debug] [2025-05-16T23:55:11.627Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:11.627Z] Checked if tokens are valid: true, expires at: 1747443301718
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2025-05-16T23:55:11.627Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:11.627Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:11.627Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-05-16T23:55:11.627Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-16T23:55:11.628Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/runtimeconfig.googleapis.com [none]
+[debug] [2025-05-16T23:55:11.628Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-16T23:55:11.631Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudbuild.googleapis.com [none]
+[debug] [2025-05-16T23:55:11.631Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudbuild.googleapis.com x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-16T23:55:11.632Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/artifactregistry.googleapis.com [none]
+[debug] [2025-05-16T23:55:11.632Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/artifactregistry.googleapis.com x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-16T23:55:11.984Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudfunctions.googleapis.com 200
+[debug] [2025-05-16T23:55:11.985Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudfunctions.googleapis.com [omitted]
+[info] +  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2025-05-16T23:55:12.437Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/runtimeconfig.googleapis.com 200
+[debug] [2025-05-16T23:55:12.438Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2025-05-16T23:55:12.440Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudbuild.googleapis.com 200
+[debug] [2025-05-16T23:55:12.440Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudbuild.googleapis.com [omitted]
+[warn] !  functions: missing required API cloudbuild.googleapis.com. Enabling now... 
+[debug] [2025-05-16T23:55:12.441Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:12.441Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:12.441Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudbuild.googleapis.com:enable [none]
+[debug] [2025-05-16T23:55:12.441Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudbuild.googleapis.com:enable x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-16T23:55:12.445Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/artifactregistry.googleapis.com 200
+[debug] [2025-05-16T23:55:12.445Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/artifactregistry.googleapis.com [omitted]
+[warn] !  artifactregistry: missing required API artifactregistry.googleapis.com. Enabling now... 
+[debug] [2025-05-16T23:55:12.446Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:12.446Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:12.446Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/artifactregistry.googleapis.com:enable [none]
+[debug] [2025-05-16T23:55:12.446Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/artifactregistry.googleapis.com:enable x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-16T23:55:13.213Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/artifactregistry.googleapis.com:enable 200
+[debug] [2025-05-16T23:55:13.214Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/artifactregistry.googleapis.com:enable [omitted]
+[debug] [2025-05-16T23:55:13.678Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudbuild.googleapis.com:enable 200
+[debug] [2025-05-16T23:55:13.679Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudbuild.googleapis.com:enable [omitted]
+[debug] [2025-05-16T23:55:23.220Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:23.221Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:23.221Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/artifactregistry.googleapis.com [none]
+[debug] [2025-05-16T23:55:23.221Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/artifactregistry.googleapis.com x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-16T23:55:23.692Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:23.692Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:23.693Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudbuild.googleapis.com [none]
+[debug] [2025-05-16T23:55:23.693Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudbuild.googleapis.com x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-16T23:55:24.038Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/artifactregistry.googleapis.com 200
+[debug] [2025-05-16T23:55:24.038Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/artifactregistry.googleapis.com [omitted]
+[info] +  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2025-05-16T23:55:24.508Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudbuild.googleapis.com 200
+[debug] [2025-05-16T23:55:24.508Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudbuild.googleapis.com [omitted]
+[info] +  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2025-05-16T23:55:24.510Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:24.510Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:24.510Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/sync-pro-fe572/adminSdkConfig [none]
+[debug] [2025-05-16T23:55:24.798Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/sync-pro-fe572/adminSdkConfig 200
+[debug] [2025-05-16T23:55:24.799Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/sync-pro-fe572/adminSdkConfig {"projectId":"sync-pro-fe572","storageBucket":"sync-pro-fe572.firebasestorage.app"}
+[debug] [2025-05-16T23:55:24.799Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:24.799Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:24.799Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/sync-pro-fe572/configs [none]
+[debug] [2025-05-16T23:55:25.087Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/sync-pro-fe572/configs 200
+[debug] [2025-05-16T23:55:25.087Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/sync-pro-fe572/configs {}
+[debug] [2025-05-16T23:55:25.088Z] Validating nodejs source
+[debug] [2025-05-16T23:55:25.682Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts . --fix",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^12.6.0",
+    "firebase-functions": "^6.0.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^3.1.0",
+    "typescript": "^4.9.0"
+  },
+  "private": true
+}
+[debug] [2025-05-16T23:55:25.682Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2025-05-16T23:55:25.683Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-05-16T23:55:25.690Z] Found firebase-functions binary at 'C:\Users\conta\Desktop\sync-pro\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8624
+
+[debug] [2025-05-16T23:55:26.132Z] Got response from /__/functions.yaml {"endpoints":{"creerCompteUtilisateur":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["europe-west1"],"labels":{},"callableTrigger":{},"entryPoint":"creerCompteUtilisateur"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled... 
+[debug] [2025-05-16T23:55:30.170Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:30.170Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:30.170Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/firebaseextensions.googleapis.com [none]
+[debug] [2025-05-16T23:55:30.170Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/firebaseextensions.googleapis.com x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-16T23:55:30.973Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/firebaseextensions.googleapis.com 200
+[debug] [2025-05-16T23:55:30.973Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/firebaseextensions.googleapis.com [omitted]
+[warn] !  extensions: missing required API firebaseextensions.googleapis.com. Enabling now... 
+[debug] [2025-05-16T23:55:30.974Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:30.974Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:30.974Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/firebaseextensions.googleapis.com:enable [none]
+[debug] [2025-05-16T23:55:30.974Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/firebaseextensions.googleapis.com:enable x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-16T23:55:31.536Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/firebaseextensions.googleapis.com:enable 200
+[debug] [2025-05-16T23:55:31.536Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/firebaseextensions.googleapis.com:enable [omitted]
+[debug] [2025-05-16T23:55:41.549Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:41.549Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:41.550Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/firebaseextensions.googleapis.com [none]
+[debug] [2025-05-16T23:55:41.550Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/firebaseextensions.googleapis.com x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-16T23:55:42.325Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/firebaseextensions.googleapis.com 200
+[debug] [2025-05-16T23:55:42.326Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/firebaseextensions.googleapis.com [omitted]
+[info] +  extensions: required API firebaseextensions.googleapis.com is enabled 
+[debug] [2025-05-16T23:55:42.329Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-05-16T23:55:42.329Z] > authorizing via signed-in user (contact@javachrist.fr)
+[debug] [2025-05-16T23:55:42.329Z] [iam] checking project sync-pro-fe572 for permissions ["firebase.projects.get","firebaseextensions.instances.list"]
+[debug] [2025-05-16T23:55:42.329Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:42.329Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:42.329Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions [none]
+[debug] [2025-05-16T23:55:42.329Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-16T23:55:42.329Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2025-05-16T23:55:42.955Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions 200
+[debug] [2025-05-16T23:55:42.955Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2025-05-16T23:55:42.956Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:42.956Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:42.957Z] >>> [apiv2][query] GET https://firebaseextensions.googleapis.com/v1beta/projects/sync-pro-fe572/instances pageSize=100&pageToken=
+[debug] [2025-05-16T23:55:44.939Z] <<< [apiv2][status] GET https://firebaseextensions.googleapis.com/v1beta/projects/sync-pro-fe572/instances 200
+[debug] [2025-05-16T23:55:44.939Z] <<< [apiv2][body] GET https://firebaseextensions.googleapis.com/v1beta/projects/sync-pro-fe572/instances {}
+[info] i  functions: preparing functions directory for uploading... 
+[info] i  functions: packaged C:\Users\conta\Desktop\sync-pro\functions (90.49 KB) for uploading 
+[debug] [2025-05-16T23:55:44.979Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:44.979Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:44.979Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/sync-pro-fe572/locations/-/functions [none]
+[debug] [2025-05-16T23:55:45.576Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/sync-pro-fe572/locations/-/functions 200
+[debug] [2025-05-16T23:55:45.576Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/sync-pro-fe572/locations/-/functions {}
+[debug] [2025-05-16T23:55:45.576Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:45.576Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:45.577Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2025-05-16T23:55:46.538Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/-/functions 200
+[debug] [2025-05-16T23:55:46.538Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/-/functions {}
+[info] i  functions: ensuring required API run.googleapis.com is enabled... 
+[debug] [2025-05-16T23:55:46.542Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:46.542Z] Checked if tokens are valid: true, expires at: 1747443301718
+[info] i  functions: ensuring required API eventarc.googleapis.com is enabled... 
+[debug] [2025-05-16T23:55:46.542Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:46.542Z] Checked if tokens are valid: true, expires at: 1747443301718
+[info] i  functions: ensuring required API pubsub.googleapis.com is enabled... 
+[debug] [2025-05-16T23:55:46.543Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:46.543Z] Checked if tokens are valid: true, expires at: 1747443301718
+[info] i  functions: ensuring required API storage.googleapis.com is enabled... 
+[debug] [2025-05-16T23:55:46.543Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:46.543Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:46.543Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/run.googleapis.com [none]
+[debug] [2025-05-16T23:55:46.543Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/run.googleapis.com x-goog-quota-user=projects/72872089595
+[debug] [2025-05-16T23:55:46.544Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/eventarc.googleapis.com [none]
+[debug] [2025-05-16T23:55:46.544Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/eventarc.googleapis.com x-goog-quota-user=projects/72872089595
+[debug] [2025-05-16T23:55:46.545Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/pubsub.googleapis.com [none]
+[debug] [2025-05-16T23:55:46.545Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/pubsub.googleapis.com x-goog-quota-user=projects/72872089595
+[debug] [2025-05-16T23:55:46.546Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/storage.googleapis.com [none]
+[debug] [2025-05-16T23:55:46.547Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/storage.googleapis.com x-goog-quota-user=projects/72872089595
+[debug] [2025-05-16T23:55:46.871Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/run.googleapis.com 200
+[debug] [2025-05-16T23:55:46.871Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/run.googleapis.com [omitted]
+[warn] !  functions: missing required API run.googleapis.com. Enabling now... 
+[debug] [2025-05-16T23:55:46.872Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:46.872Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:46.872Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/72872089595/services/run.googleapis.com:enable [none]
+[debug] [2025-05-16T23:55:46.873Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/72872089595/services/run.googleapis.com:enable x-goog-quota-user=projects/72872089595
+[debug] [2025-05-16T23:55:47.311Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/eventarc.googleapis.com 200
+[debug] [2025-05-16T23:55:47.311Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/eventarc.googleapis.com [omitted]
+[warn] !  functions: missing required API eventarc.googleapis.com. Enabling now... 
+[debug] [2025-05-16T23:55:47.312Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:47.312Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:47.312Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/72872089595/services/eventarc.googleapis.com:enable [none]
+[debug] [2025-05-16T23:55:47.312Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/72872089595/services/eventarc.googleapis.com:enable x-goog-quota-user=projects/72872089595
+[debug] [2025-05-16T23:55:47.321Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/pubsub.googleapis.com 200
+[debug] [2025-05-16T23:55:47.321Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/pubsub.googleapis.com [omitted]
+[info] +  functions: required API pubsub.googleapis.com is enabled 
+[debug] [2025-05-16T23:55:47.369Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/storage.googleapis.com 200
+[debug] [2025-05-16T23:55:47.369Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/storage.googleapis.com [omitted]
+[info] +  functions: required API storage.googleapis.com is enabled 
+[debug] [2025-05-16T23:55:48.164Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/72872089595/services/eventarc.googleapis.com:enable 200
+[debug] [2025-05-16T23:55:48.164Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/72872089595/services/eventarc.googleapis.com:enable [omitted]
+[debug] [2025-05-16T23:55:48.172Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/72872089595/services/run.googleapis.com:enable 200
+[debug] [2025-05-16T23:55:48.172Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/72872089595/services/run.googleapis.com:enable [omitted]
+[debug] [2025-05-16T23:55:58.173Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:58.173Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:58.174Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/eventarc.googleapis.com [none]
+[debug] [2025-05-16T23:55:58.174Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/eventarc.googleapis.com x-goog-quota-user=projects/72872089595
+[debug] [2025-05-16T23:55:58.177Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:58.177Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:58.177Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/run.googleapis.com [none]
+[debug] [2025-05-16T23:55:58.177Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/run.googleapis.com x-goog-quota-user=projects/72872089595
+[debug] [2025-05-16T23:55:58.972Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/eventarc.googleapis.com 200
+[debug] [2025-05-16T23:55:58.972Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/eventarc.googleapis.com [omitted]
+[info] +  functions: required API eventarc.googleapis.com is enabled 
+[debug] [2025-05-16T23:55:58.989Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/run.googleapis.com 200
+[debug] [2025-05-16T23:55:58.990Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/run.googleapis.com [omitted]
+[info] +  functions: required API run.googleapis.com is enabled 
+[info] i  functions: generating the service identity for pubsub.googleapis.com... 
+[debug] [2025-05-16T23:55:58.993Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:58.993Z] Checked if tokens are valid: true, expires at: 1747443301718
+[info] i  functions: generating the service identity for eventarc.googleapis.com... 
+[debug] [2025-05-16T23:55:58.993Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:58.993Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:58.993Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/72872089595/services/pubsub.googleapis.com:generateServiceIdentity [none]
+[debug] [2025-05-16T23:55:58.993Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/72872089595/services/eventarc.googleapis.com:generateServiceIdentity [none]
+[debug] [2025-05-16T23:55:59.554Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/72872089595/services/eventarc.googleapis.com:generateServiceIdentity 200
+[debug] [2025-05-16T23:55:59.554Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/72872089595/services/eventarc.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-72872089595@gcp-sa-eventarc.iam.gserviceaccount.com","uniqueId":"103547668492949353935"}}
+[debug] [2025-05-16T23:55:59.612Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/72872089595/services/pubsub.googleapis.com:generateServiceIdentity 200
+[debug] [2025-05-16T23:55:59.612Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/72872089595/services/pubsub.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-72872089595@gcp-sa-pubsub.iam.gserviceaccount.com","uniqueId":"103491903430041180761"}}
+[debug] [2025-05-16T23:55:59.614Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:59.614Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:55:59.614Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudresourcemanager.googleapis.com [none]
+[debug] [2025-05-16T23:55:59.614Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudresourcemanager.googleapis.com x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-16T23:56:00.532Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudresourcemanager.googleapis.com 200
+[debug] [2025-05-16T23:56:00.532Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudresourcemanager.googleapis.com [omitted]
+[debug] [2025-05-16T23:56:00.532Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:00.532Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:00.532Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572 [none]
+[debug] [2025-05-16T23:56:01.185Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572 200
+[debug] [2025-05-16T23:56:01.185Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572 {"projectNumber":"72872089595","projectId":"sync-pro-fe572","lifecycleState":"ACTIVE","name":"sync-pro","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-05-16T16:43:16.160470Z","parent":{"type":"organization","id":"294271354232"}}
+[debug] [2025-05-16T23:56:01.185Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:01.186Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:01.186Z] >>> [apiv2][query] GET https://compute.googleapis.com/compute/v1/projects/72872089595 [none]
+[debug] [2025-05-16T23:56:01.403Z] <<< [apiv2][status] GET https://compute.googleapis.com/compute/v1/projects/72872089595 403
+[debug] [2025-05-16T23:56:01.403Z] <<< [apiv2][body] GET https://compute.googleapis.com/compute/v1/projects/72872089595 {"error":{"code":403,"message":"Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595","service":"compute.googleapis.com","serviceTitle":"Compute Engine API","consumer":"projects/72872089595","containerInfo":"72872089595"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595"}]}]}}
+[debug] [2025-05-16T23:56:01.404Z] unable to look up default compute service account. Falling back to 72872089595-compute@developer.gserviceaccount.com. Error: {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":403,"message":"Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595","service":"compute.googleapis.com","serviceTitle":"Compute Engine API","consumer":"projects/72872089595","containerInfo":"72872089595"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595"}]}]}},"response":{"statusCode":403}},"exit":1,"message":"Request to https://compute.googleapis.com/compute/v1/projects/72872089595 had HTTP Error: 403, Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","status":403}
+[debug] [2025-05-16T23:56:01.405Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:01.405Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:01.405Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/sync-pro-fe572/billingInfo [none]
+[debug] [2025-05-16T23:56:01.815Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/sync-pro-fe572/billingInfo 200
+[debug] [2025-05-16T23:56:01.815Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/sync-pro-fe572/billingInfo {"name":"projects/sync-pro-fe572/billingInfo","projectId":"sync-pro-fe572","billingAccountName":"billingAccounts/011311-B2EADD-7A6C98","billingEnabled":true}
+[debug] [2025-05-16T23:56:01.816Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:01.816Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:01.816Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/functions:generateUploadUrl [none]
+[debug] [2025-05-16T23:56:04.135Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/functions:generateUploadUrl 200
+[debug] [2025-05-16T23:56:04.136Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/functions:generateUploadUrl {"uploadUrl":"https://storage.googleapis.com/gcf-v2-uploads-72872089595.europe-west1.cloudfunctions.appspot.com/7b7c6efa-bb18-46e8-98f5-59b591724070.zip?GoogleAccessId=service-72872089595@gcf-admin-robot.iam.gserviceaccount.com&Expires=1747441564&Signature=Beah4PSN7d%2BziDiaRNAqPxL2q5r7h%2FgZ7w%2BxWiykvCGk7DA3pYR%2BrAOUP2qz%2FZHFeQ2vEd%2B9G07z3ibJCTZSKIeBpxXXMLvqFARNgZO5ty1Xyh2VuCQpaDpi%2BkRhGXTbrnuRK0Dq1dw6C6XmCerf4eh8WyWchD4J%2FqgTHPSIK3fQDlXAY5I7WLAOmxL4uNMYruD3goIws5QarK0VC4WBmWxjaA%2FBo08LcG0kmGobGji17phhnlSPrhpggte%2BYJkmhQdSIDkRlbPMXOXqgyibqy4tsYUALZhOm2yQPKOK%2BuF61Z6B6ruNxwVnlYuaeXCFmdNU8LJ%2FwsHMtH0Feajujg%3D%3D","storageSource":{"bucket":"gcf-v2-uploads-72872089595.europe-west1.cloudfunctions.appspot.com","object":"7b7c6efa-bb18-46e8-98f5-59b591724070.zip"}}
+[debug] [2025-05-16T23:56:04.136Z] >>> [apiv2][query] PUT https://storage.googleapis.com/gcf-v2-uploads-72872089595.europe-west1.cloudfunctions.appspot.com/7b7c6efa-bb18-46e8-98f5-59b591724070.zip GoogleAccessId=service-72872089595%40gcf-admin-robot.iam.gserviceaccount.com&Expires=1747441564&Signature=Beah4PSN7d%2BziDiaRNAqPxL2q5r7h%2FgZ7w%2BxWiykvCGk7DA3pYR%2BrAOUP2qz%2FZHFeQ2vEd%2B9G07z3ibJCTZSKIeBpxXXMLvqFARNgZO5ty1Xyh2VuCQpaDpi%2BkRhGXTbrnuRK0Dq1dw6C6XmCerf4eh8WyWchD4J%2FqgTHPSIK3fQDlXAY5I7WLAOmxL4uNMYruD3goIws5QarK0VC4WBmWxjaA%2FBo08LcG0kmGobGji17phhnlSPrhpggte%2BYJkmhQdSIDkRlbPMXOXqgyibqy4tsYUALZhOm2yQPKOK%2BuF61Z6B6ruNxwVnlYuaeXCFmdNU8LJ%2FwsHMtH0Feajujg%3D%3D
+[debug] [2025-05-16T23:56:04.136Z] >>> [apiv2][body] PUT https://storage.googleapis.com/gcf-v2-uploads-72872089595.europe-west1.cloudfunctions.appspot.com/7b7c6efa-bb18-46e8-98f5-59b591724070.zip [stream]
+[debug] [2025-05-16T23:56:04.318Z] <<< [apiv2][status] PUT https://storage.googleapis.com/gcf-v2-uploads-72872089595.europe-west1.cloudfunctions.appspot.com/7b7c6efa-bb18-46e8-98f5-59b591724070.zip 200
+[debug] [2025-05-16T23:56:04.319Z] <<< [apiv2][body] PUT https://storage.googleapis.com/gcf-v2-uploads-72872089595.europe-west1.cloudfunctions.appspot.com/7b7c6efa-bb18-46e8-98f5-59b591724070.zip [omitted]
+[info] +  functions: functions folder uploaded successfully 
+[info] i  functions: creating Node.js 22 (2nd Gen) function creerCompteUtilisateur(europe-west1)... 
+[debug] [2025-05-16T23:56:04.326Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:04.327Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:04.327Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/functions functionId=creerCompteUtilisateur
+[debug] [2025-05-16T23:56:04.327Z] >>> [apiv2][body] POST https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/functions {"name":"projects/sync-pro-fe572/locations/europe-west1/functions/creerCompteUtilisateur","buildConfig":{"runtime":"nodejs22","entryPoint":"creerCompteUtilisateur","source":{"storageSource":{"bucket":"gcf-v2-uploads-72872089595.europe-west1.cloudfunctions.appspot.com","object":"7b7c6efa-bb18-46e8-98f5-59b591724070.zip"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""}},"serviceConfig":{"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"sync-pro-fe572\",\"storageBucket\":\"sync-pro-fe572.firebasestorage.app\"}","GCLOUD_PROJECT":"sync-pro-fe572","EVENTARC_CLOUD_EVENT_SOURCE":"projects/sync-pro-fe572/locations/europe-west1/services/creerCompteUtilisateur","FUNCTION_TARGET":"creerCompteUtilisateur","LOG_EXECUTION_ID":"true"},"ingressSettings":null,"timeoutSeconds":null,"serviceAccountEmail":null,"availableMemory":"256Mi","minInstanceCount":null,"maxInstanceCount":null,"maxInstanceRequestConcurrency":80,"availableCpu":"1","vpcConnector":null,"vpcConnectorEgressSettings":null},"labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"c1bad22e7bd9f1e55b91a06d01ea0501dfa04efe"}}
+[debug] [2025-05-16T23:56:06.275Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/functions 200
+[debug] [2025-05-16T23:56:06.275Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/functions {"name":"projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-05-16T23:56:06.450317035Z","target":"projects/sync-pro-fe572/locations/europe-west1/functions/creerCompteUtilisateur","verb":"create","cancelRequested":false,"apiVersion":"v2"},"done":false}
+[debug] [2025-05-16T23:56:06.276Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:06.276Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:06.276Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae [none]
+[debug] [2025-05-16T23:56:06.343Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae 200
+[debug] [2025-05-16T23:56:06.343Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae {"name":"projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-05-16T23:56:06.450317035Z","target":"projects/sync-pro-fe572/locations/europe-west1/functions/creerCompteUtilisateur","verb":"create","cancelRequested":false,"apiVersion":"v2"},"done":false}
+[debug] [2025-05-16T23:56:06.846Z] [create-default-europe-west1-creerCompteUtilisateur] Retrying task index 0
+[debug] [2025-05-16T23:56:06.846Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:06.846Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:06.846Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae [none]
+[debug] [2025-05-16T23:56:06.892Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae 200
+[debug] [2025-05-16T23:56:06.893Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae {"name":"projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-05-16T23:56:06.450317035Z","target":"projects/sync-pro-fe572/locations/europe-west1/functions/creerCompteUtilisateur","verb":"create","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/sync-pro-fe572/locations/europe-west1/functions/creerCompteUtilisateur","buildConfig":{"runtime":"nodejs22","entryPoint":"creerCompteUtilisateur","source":{"storageSource":{"bucket":"gcf-v2-sources-72872089595-europe-west1","object":"creerCompteUtilisateur/function-source.zip","generation":"1747439766024493"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"serviceAccount":"projects/sync-pro-fe572/serviceAccounts/72872089595-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/sync-pro-fe572/locations/europe-west1/services/creercompteutilisateur","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"sync-pro-fe572\",\"storageBucket\":\"sync-pro-fe572.firebasestorage.app\"}","GCLOUD_PROJECT":"sync-pro-fe572","EVENTARC_CLOUD_EVENT_SOURCE":"projects/sync-pro-fe572/locations/europe-west1/services/creerCompteUtilisateur","FUNCTION_TARGET":"creerCompteUtilisateur","LOG_EXECUTION_ID":"true"},"ingressSettings":"ALLOW_ALL","serviceAccountEmail":"72872089595-compute@developer.gserviceaccount.com","availableMemory":"256Mi","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"c1bad22e7bd9f1e55b91a06d01ea0501dfa04efe"},"environment":"GEN_2"},"stages":[{"name":"BUILD","state":"NOT_STARTED"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"CREATE_FUNCTION"},"done":false}
+[debug] [2025-05-16T23:56:07.904Z] [create-default-europe-west1-creerCompteUtilisateur] Retrying task index 0
+[debug] [2025-05-16T23:56:07.904Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:07.904Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:07.905Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae [none]
+[debug] [2025-05-16T23:56:07.970Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae 200
+[debug] [2025-05-16T23:56:07.970Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae {"name":"projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-05-16T23:56:06.450317035Z","target":"projects/sync-pro-fe572/locations/europe-west1/functions/creerCompteUtilisateur","verb":"create","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/sync-pro-fe572/locations/europe-west1/functions/creerCompteUtilisateur","buildConfig":{"runtime":"nodejs22","entryPoint":"creerCompteUtilisateur","source":{"storageSource":{"bucket":"gcf-v2-sources-72872089595-europe-west1","object":"creerCompteUtilisateur/function-source.zip","generation":"1747439766024493"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"serviceAccount":"projects/sync-pro-fe572/serviceAccounts/72872089595-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/sync-pro-fe572/locations/europe-west1/services/creercompteutilisateur","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"sync-pro-fe572\",\"storageBucket\":\"sync-pro-fe572.firebasestorage.app\"}","GCLOUD_PROJECT":"sync-pro-fe572","EVENTARC_CLOUD_EVENT_SOURCE":"projects/sync-pro-fe572/locations/europe-west1/services/creerCompteUtilisateur","FUNCTION_TARGET":"creerCompteUtilisateur","LOG_EXECUTION_ID":"true"},"ingressSettings":"ALLOW_ALL","serviceAccountEmail":"72872089595-compute@developer.gserviceaccount.com","availableMemory":"256Mi","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"c1bad22e7bd9f1e55b91a06d01ea0501dfa04efe"},"environment":"GEN_2"},"stages":[{"name":"BUILD","state":"NOT_STARTED"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"CREATE_FUNCTION"},"done":false}
+[debug] [2025-05-16T23:56:09.985Z] [create-default-europe-west1-creerCompteUtilisateur] Retrying task index 0
+[debug] [2025-05-16T23:56:09.986Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:09.986Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:09.986Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae [none]
+[debug] [2025-05-16T23:56:10.027Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae 200
+[debug] [2025-05-16T23:56:10.027Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae {"name":"projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-05-16T23:56:06.450317035Z","target":"projects/sync-pro-fe572/locations/europe-west1/functions/creerCompteUtilisateur","verb":"create","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/sync-pro-fe572/locations/europe-west1/functions/creerCompteUtilisateur","buildConfig":{"runtime":"nodejs22","entryPoint":"creerCompteUtilisateur","source":{"storageSource":{"bucket":"gcf-v2-sources-72872089595-europe-west1","object":"creerCompteUtilisateur/function-source.zip","generation":"1747439766024493"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"serviceAccount":"projects/sync-pro-fe572/serviceAccounts/72872089595-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/sync-pro-fe572/locations/europe-west1/services/creercompteutilisateur","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"sync-pro-fe572\",\"storageBucket\":\"sync-pro-fe572.firebasestorage.app\"}","GCLOUD_PROJECT":"sync-pro-fe572","EVENTARC_CLOUD_EVENT_SOURCE":"projects/sync-pro-fe572/locations/europe-west1/services/creerCompteUtilisateur","FUNCTION_TARGET":"creerCompteUtilisateur","LOG_EXECUTION_ID":"true"},"ingressSettings":"ALLOW_ALL","serviceAccountEmail":"72872089595-compute@developer.gserviceaccount.com","availableMemory":"256Mi","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"c1bad22e7bd9f1e55b91a06d01ea0501dfa04efe"},"environment":"GEN_2"},"stages":[{"name":"BUILD","state":"NOT_STARTED"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"CREATE_FUNCTION"},"done":false}
+[debug] [2025-05-16T23:56:14.044Z] [create-default-europe-west1-creerCompteUtilisateur] Retrying task index 0
+[debug] [2025-05-16T23:56:14.045Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:14.045Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:14.045Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae [none]
+[debug] [2025-05-16T23:56:14.084Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae 200
+[debug] [2025-05-16T23:56:14.084Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae {"name":"projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-05-16T23:56:06.450317035Z","target":"projects/sync-pro-fe572/locations/europe-west1/functions/creerCompteUtilisateur","verb":"create","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/sync-pro-fe572/locations/europe-west1/functions/creerCompteUtilisateur","buildConfig":{"runtime":"nodejs22","entryPoint":"creerCompteUtilisateur","source":{"storageSource":{"bucket":"gcf-v2-sources-72872089595-europe-west1","object":"creerCompteUtilisateur/function-source.zip","generation":"1747439766024493"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"serviceAccount":"projects/sync-pro-fe572/serviceAccounts/72872089595-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/sync-pro-fe572/locations/europe-west1/services/creercompteutilisateur","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"sync-pro-fe572\",\"storageBucket\":\"sync-pro-fe572.firebasestorage.app\"}","GCLOUD_PROJECT":"sync-pro-fe572","EVENTARC_CLOUD_EVENT_SOURCE":"projects/sync-pro-fe572/locations/europe-west1/services/creerCompteUtilisateur","FUNCTION_TARGET":"creerCompteUtilisateur","LOG_EXECUTION_ID":"true"},"ingressSettings":"ALLOW_ALL","serviceAccountEmail":"72872089595-compute@developer.gserviceaccount.com","availableMemory":"256Mi","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"c1bad22e7bd9f1e55b91a06d01ea0501dfa04efe"},"environment":"GEN_2"},"stages":[{"name":"BUILD","state":"NOT_STARTED"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"CREATE_FUNCTION"},"done":false}
+[debug] [2025-05-16T23:56:22.098Z] [create-default-europe-west1-creerCompteUtilisateur] Retrying task index 0
+[debug] [2025-05-16T23:56:22.099Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:22.099Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:22.099Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae [none]
+[debug] [2025-05-16T23:56:22.205Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae 200
+[debug] [2025-05-16T23:56:22.206Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae {"name":"projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-05-16T23:56:06.450317035Z","target":"projects/sync-pro-fe572/locations/europe-west1/functions/creerCompteUtilisateur","verb":"create","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/sync-pro-fe572/locations/europe-west1/functions/creerCompteUtilisateur","buildConfig":{"runtime":"nodejs22","entryPoint":"creerCompteUtilisateur","source":{"storageSource":{"bucket":"gcf-v2-sources-72872089595-europe-west1","object":"creerCompteUtilisateur/function-source.zip","generation":"1747439766024493"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"serviceAccount":"projects/sync-pro-fe572/serviceAccounts/72872089595-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/sync-pro-fe572/locations/europe-west1/services/creercompteutilisateur","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"sync-pro-fe572\",\"storageBucket\":\"sync-pro-fe572.firebasestorage.app\"}","GCLOUD_PROJECT":"sync-pro-fe572","EVENTARC_CLOUD_EVENT_SOURCE":"projects/sync-pro-fe572/locations/europe-west1/services/creerCompteUtilisateur","FUNCTION_TARGET":"creerCompteUtilisateur","LOG_EXECUTION_ID":"true"},"ingressSettings":"ALLOW_ALL","serviceAccountEmail":"72872089595-compute@developer.gserviceaccount.com","availableMemory":"256Mi","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"c1bad22e7bd9f1e55b91a06d01ea0501dfa04efe"},"environment":"GEN_2"},"stages":[{"name":"BUILD","message":"Build in progress","state":"IN_PROGRESS","resource":"projects/72872089595/locations/europe-west1/builds/86ce0a4d-6976-4f23-8d4e-73e4ea253bfe","resourceUri":"https://console.cloud.google.com/cloud-build/builds;region=europe-west1/86ce0a4d-6976-4f23-8d4e-73e4ea253bfe?project=72872089595"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"CREATE_FUNCTION","buildName":"projects/72872089595/locations/europe-west1/builds/86ce0a4d-6976-4f23-8d4e-73e4ea253bfe"},"done":false}
+[debug] [2025-05-16T23:56:32.215Z] [create-default-europe-west1-creerCompteUtilisateur] Retrying task index 0
+[debug] [2025-05-16T23:56:32.216Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:32.216Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:32.216Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae [none]
+[debug] [2025-05-16T23:56:32.296Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae 200
+[debug] [2025-05-16T23:56:32.296Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae {"name":"projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-05-16T23:56:06.450317035Z","target":"projects/sync-pro-fe572/locations/europe-west1/functions/creerCompteUtilisateur","verb":"create","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/sync-pro-fe572/locations/europe-west1/functions/creerCompteUtilisateur","buildConfig":{"runtime":"nodejs22","entryPoint":"creerCompteUtilisateur","source":{"storageSource":{"bucket":"gcf-v2-sources-72872089595-europe-west1","object":"creerCompteUtilisateur/function-source.zip","generation":"1747439766024493"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"serviceAccount":"projects/sync-pro-fe572/serviceAccounts/72872089595-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/sync-pro-fe572/locations/europe-west1/services/creercompteutilisateur","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"sync-pro-fe572\",\"storageBucket\":\"sync-pro-fe572.firebasestorage.app\"}","GCLOUD_PROJECT":"sync-pro-fe572","EVENTARC_CLOUD_EVENT_SOURCE":"projects/sync-pro-fe572/locations/europe-west1/services/creerCompteUtilisateur","FUNCTION_TARGET":"creerCompteUtilisateur","LOG_EXECUTION_ID":"true"},"ingressSettings":"ALLOW_ALL","serviceAccountEmail":"72872089595-compute@developer.gserviceaccount.com","availableMemory":"256Mi","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"c1bad22e7bd9f1e55b91a06d01ea0501dfa04efe"},"environment":"GEN_2"},"stages":[{"name":"BUILD","message":"Build in progress","state":"IN_PROGRESS","resource":"projects/72872089595/locations/europe-west1/builds/86ce0a4d-6976-4f23-8d4e-73e4ea253bfe","resourceUri":"https://console.cloud.google.com/cloud-build/builds;region=europe-west1/86ce0a4d-6976-4f23-8d4e-73e4ea253bfe?project=72872089595"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"CREATE_FUNCTION","buildName":"projects/72872089595/locations/europe-west1/builds/86ce0a4d-6976-4f23-8d4e-73e4ea253bfe"},"done":false}
+[debug] [2025-05-16T23:56:42.308Z] [create-default-europe-west1-creerCompteUtilisateur] Retrying task index 0
+[debug] [2025-05-16T23:56:42.309Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:42.309Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:42.309Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae [none]
+[debug] [2025-05-16T23:56:42.385Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae 200
+[debug] [2025-05-16T23:56:42.386Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae {"name":"projects/sync-pro-fe572/locations/europe-west1/operations/operation-1747439764572-63549866f083b-8f7a98d1-6082a5ae","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-05-16T23:56:06.450317035Z","endTime":"2025-05-16T23:56:36.752437413Z","target":"projects/sync-pro-fe572/locations/europe-west1/functions/creerCompteUtilisateur","verb":"create","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/sync-pro-fe572/locations/europe-west1/functions/creerCompteUtilisateur","buildConfig":{"runtime":"nodejs22","entryPoint":"creerCompteUtilisateur","source":{"storageSource":{"bucket":"gcf-v2-sources-72872089595-europe-west1","object":"creerCompteUtilisateur/function-source.zip","generation":"1747439766024493"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"serviceAccount":"projects/sync-pro-fe572/serviceAccounts/72872089595-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/sync-pro-fe572/locations/europe-west1/services/creercompteutilisateur","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"sync-pro-fe572\",\"storageBucket\":\"sync-pro-fe572.firebasestorage.app\"}","GCLOUD_PROJECT":"sync-pro-fe572","EVENTARC_CLOUD_EVENT_SOURCE":"projects/sync-pro-fe572/locations/europe-west1/services/creerCompteUtilisateur","FUNCTION_TARGET":"creerCompteUtilisateur","LOG_EXECUTION_ID":"true"},"ingressSettings":"ALLOW_ALL","serviceAccountEmail":"72872089595-compute@developer.gserviceaccount.com","availableMemory":"256Mi","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"c1bad22e7bd9f1e55b91a06d01ea0501dfa04efe"},"environment":"GEN_2"},"stages":[{"name":"ARTIFACT_REGISTRY","message":"Deleting function artifacts in Artifact Registry","state":"COMPLETE"},{"name":"SERVICE","message":"Deleting Cloud Run service","state":"COMPLETE","resource":"projects/sync-pro-fe572/locations/europe-west1/services/creercompteutilisateur"}],"operationType":"CREATE_FUNCTION"},"done":true,"error":{"code":3,"message":"Build failed with status: FAILURE. Could not build the function due to a missing permission on the build service account. If you didn't revoke that permission explicitly, this could be caused by a change in the organization policies. Please refer to the following documentation for more details and resolution: https://cloud.google.com/functions/docs/troubleshooting#build-service-account\n You can also view the logs at https://console.cloud.google.com/cloud-build/builds;region=europe-west1/86ce0a4d-6976-4f23-8d4e-73e4ea253bfe?project=72872089595.\n"}}
+[debug] [2025-05-16T23:56:42.386Z] Got source token undefined for region europe-west1
+[error] Build failed with status: FAILURE. Could not build the function due to a missing permission on the build service account. If you didn't revoke that permission explicitly, this could be caused by a change in the organization policies. Please refer to the following documentation for more details and resolution: https://cloud.google.com/functions/docs/troubleshooting#build-service-account
+ You can also view the logs at https://console.cloud.google.com/cloud-build/builds;region=europe-west1/86ce0a4d-6976-4f23-8d4e-73e4ea253bfe?project=72872089595.
+
+[debug] [2025-05-16T23:56:42.393Z] Total Function Deployment time: 38064
+[debug] [2025-05-16T23:56:42.393Z] 1 Functions Deployed
+[debug] [2025-05-16T23:56:42.393Z] 1 Functions Errored
+[debug] [2025-05-16T23:56:42.393Z] 0 Function Deployments Aborted
+[debug] [2025-05-16T23:56:42.393Z] Average Function Deployment time: 38063
+[info] 
+[info] Functions deploy had errors with the following functions:
+	creerCompteUtilisateur(europe-west1)
+[debug] [2025-05-16T23:56:42.456Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:42.456Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:42.456Z] >>> [apiv2][query] GET https://artifactregistry.googleapis.com/v1/projects/sync-pro-fe572/locations/europe-west1/repositories/gcf-artifacts [none]
+[debug] [2025-05-16T23:56:42.605Z] <<< [apiv2][status] GET https://artifactregistry.googleapis.com/v1/projects/sync-pro-fe572/locations/europe-west1/repositories/gcf-artifacts 200
+[debug] [2025-05-16T23:56:42.606Z] <<< [apiv2][body] GET https://artifactregistry.googleapis.com/v1/projects/sync-pro-fe572/locations/europe-west1/repositories/gcf-artifacts {"name":"projects/sync-pro-fe572/locations/europe-west1/repositories/gcf-artifacts","format":"DOCKER","description":"This repository is created and used by Cloud Functions for storing function docker images.","labels":{"goog-managed-by":"cloudfunctions"},"createTime":"2025-05-16T23:56:16.723459Z","updateTime":"2025-05-16T23:56:16.723459Z","mode":"STANDARD_REPOSITORY","vulnerabilityScanningConfig":{"lastEnableTime":"2025-05-16T23:56:06.625380621Z","enablementState":"SCANNING_DISABLED","enablementStateReason":"API containerscanning.googleapis.com is not enabled."},"satisfiesPzi":true,"registryUri":"europe-west1-docker.pkg.dev/sync-pro-fe572/gcf-artifacts"}
+[warn] !  functions: No cleanup policy detected for repositories in europe-west1. This may result in a small monthly bill as container images accumulate over time. 
+[info] i  functions: Configuring cleanup policy for repository in europe-west1. Images older than 30 days will be automatically deleted. 
+[debug] [2025-05-16T23:56:53.031Z] Setting up artifact cleanup policy for region europe-west1
+[debug] [2025-05-16T23:56:53.031Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:53.031Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-16T23:56:53.031Z] >>> [apiv2][query] PATCH https://artifactregistry.googleapis.com/v1/projects/sync-pro-fe572/locations/europe-west1/repositories/gcf-artifacts updateMask=name%2CcleanupPolicies%2CcleanupPolicyDryRun%2Clabels
+[debug] [2025-05-16T23:56:53.031Z] >>> [apiv2][body] PATCH https://artifactregistry.googleapis.com/v1/projects/sync-pro-fe572/locations/europe-west1/repositories/gcf-artifacts {"name":"projects/sync-pro-fe572/locations/europe-west1/repositories/gcf-artifacts","cleanupPolicies":{"firebase-functions-cleanup":{"id":"firebase-functions-cleanup","condition":{"tagState":"ANY","olderThan":"2592000s"},"action":"DELETE"}},"cleanupPolicyDryRun":false,"labels":{"goog-managed-by":"cloudfunctions"}}
+[debug] [2025-05-16T23:56:53.160Z] <<< [apiv2][status] PATCH https://artifactregistry.googleapis.com/v1/projects/sync-pro-fe572/locations/europe-west1/repositories/gcf-artifacts 200
+[debug] [2025-05-16T23:56:53.160Z] <<< [apiv2][body] PATCH https://artifactregistry.googleapis.com/v1/projects/sync-pro-fe572/locations/europe-west1/repositories/gcf-artifacts {"name":"projects/sync-pro-fe572/locations/europe-west1/repositories/gcf-artifacts","format":"DOCKER","description":"This repository is created and used by Cloud Functions for storing function docker images.","labels":{"goog-managed-by":"cloudfunctions"},"createTime":"2025-05-16T23:56:16.723459Z","updateTime":"2025-05-16T23:56:53.330512Z","mode":"STANDARD_REPOSITORY","cleanupPolicies":{"firebase-functions-cleanup":{"id":"firebase-functions-cleanup","action":"DELETE","condition":{"tagState":"ANY","olderThan":"2592000s"}}},"vulnerabilityScanningConfig":{"lastEnableTime":"2025-05-16T23:56:06.625380621Z","enablementState":"SCANNING_DISABLED","enablementStateReason":"API containerscanning.googleapis.com is not enabled."},"satisfiesPzi":true}
+[info] i  functions: Configured cleanup policy for repository in europe-west1. 
+[debug] [2025-05-16T23:56:53.160Z] Functions deploy failed.
+[debug] [2025-05-16T23:56:53.160Z] {
+  "endpoint": {
+    "id": "creerCompteUtilisateur",
+    "project": "sync-pro-fe572",
+    "region": "europe-west1",
+    "entryPoint": "creerCompteUtilisateur",
+    "platform": "gcfv2",
+    "runtime": "nodejs22",
+    "callableTrigger": {},
+    "labels": {
+      "deployment-tool": "cli-firebase"
+    },
+    "serviceAccount": null,
+    "ingressSettings": null,
+    "availableMemoryMb": null,
+    "timeoutSeconds": null,
+    "maxInstances": null,
+    "minInstances": null,
+    "concurrency": 80,
+    "vpc": null,
+    "environmentVariables": {
+      "FIREBASE_CONFIG": "{\"projectId\":\"sync-pro-fe572\",\"storageBucket\":\"sync-pro-fe572.firebasestorage.app\"}",
+      "GCLOUD_PROJECT": "sync-pro-fe572",
+      "EVENTARC_CLOUD_EVENT_SOURCE": "projects/sync-pro-fe572/locations/europe-west1/services/creerCompteUtilisateur"
+    },
+    "codebase": "default",
+    "cpu": 1,
+    "targetedByOnly": false,
+    "hash": "c1bad22e7bd9f1e55b91a06d01ea0501dfa04efe"
+  },
+  "op": "create",
+  "original": {
+    "name": "FirebaseError",
+    "children": [],
+    "exit": 1,
+    "message": "Build failed with status: FAILURE. Could not build the function due to a missing permission on the build service account. If you didn't revoke that permission explicitly, this could be caused by a change in the organization policies. Please refer to the following documentation for more details and resolution: https://cloud.google.com/functions/docs/troubleshooting#build-service-account\n You can also view the logs at https://console.cloud.google.com/cloud-build/builds;region=europe-west1/86ce0a4d-6976-4f23-8d4e-73e4ea253bfe?project=72872089595.\n",
+    "original": {
+      "code": 3,
+      "message": "Build failed with status: FAILURE. Could not build the function due to a missing permission on the build service account. If you didn't revoke that permission explicitly, this could be caused by a change in the organization policies. Please refer to the following documentation for more details and resolution: https://cloud.google.com/functions/docs/troubleshooting#build-service-account\n You can also view the logs at https://console.cloud.google.com/cloud-build/builds;region=europe-west1/86ce0a4d-6976-4f23-8d4e-73e4ea253bfe?project=72872089595.\n"
+    },
+    "status": 3,
+    "code": 3
+  }
+}
+[debug] [2025-05-16T23:56:53.212Z] Error: Failed to create function creerCompteUtilisateur in region europe-west1
+    at C:\Users\conta\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:294:27
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Fabricator.createV2Function (C:\Users\conta\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:278:30)
+    at async Fabricator.createEndpoint (C:\Users\conta\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:137:13)
+    at async handle (C:\Users\conta\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:89:17)
+[error] 
+[error] Error: There was an error deploying functions
+[debug] [2025-05-17T00:21:53.231Z] ----------------------------------------------------------------------
+[debug] [2025-05-17T00:21:53.233Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\conta\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2025-05-17T00:21:53.233Z] CLI Version:   14.4.0
+[debug] [2025-05-17T00:21:53.234Z] Platform:      win32
+[debug] [2025-05-17T00:21:53.234Z] Node Version:  v22.15.0
+[debug] [2025-05-17T00:21:53.234Z] Time:          Sat May 17 2025 02:21:53 GMT+0200 (heure d’été d’Europe centrale)
+[debug] [2025-05-17T00:21:53.234Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-05-17T00:21:53.390Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-05-17T00:21:53.391Z] > authorizing via signed-in user (contact@javachrist.fr)
+[debug] [2025-05-17T00:21:53.391Z] [iam] checking project sync-pro-fe572 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2025-05-17T00:21:53.394Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:21:53.394Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:21:53.396Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions [none]
+[debug] [2025-05-17T00:21:53.396Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-17T00:21:53.396Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-05-17T00:21:54.083Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions 200
+[debug] [2025-05-17T00:21:54.083Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-05-17T00:21:54.083Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:21:54.083Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:21:54.083Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/sync-pro-fe572/serviceAccounts/sync-pro-fe572@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2025-05-17T00:21:54.083Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/sync-pro-fe572/serviceAccounts/sync-pro-fe572@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2025-05-17T00:21:54.758Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/sync-pro-fe572/serviceAccounts/sync-pro-fe572@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2025-05-17T00:21:54.758Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/sync-pro-fe572/serviceAccounts/sync-pro-fe572@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'sync-pro-fe572'...
+[info] 
+[info] i  deploying functions 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] Running command: npm --prefix "$RESOURCE_DIR" run build
+[info] +  functions: Finished running predeploy script. 
+[debug] [2025-05-17T00:22:01.024Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:01.024Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:01.024Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudresourcemanager.googleapis.com [none]
+[debug] [2025-05-17T00:22:01.024Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudresourcemanager.googleapis.com x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-17T00:22:01.882Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudresourcemanager.googleapis.com 200
+[debug] [2025-05-17T00:22:01.883Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudresourcemanager.googleapis.com [omitted]
+[debug] [2025-05-17T00:22:01.883Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:01.883Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:01.883Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572 [none]
+[debug] [2025-05-17T00:22:02.535Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572 200
+[debug] [2025-05-17T00:22:02.535Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572 {"projectNumber":"72872089595","projectId":"sync-pro-fe572","lifecycleState":"ACTIVE","name":"sync-pro","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-05-16T16:43:16.160470Z","parent":{"type":"organization","id":"294271354232"}}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[debug] [2025-05-17T00:22:02.537Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:02.537Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:02.537Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:02.537Z] Checked if tokens are valid: true, expires at: 1747443301718
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[debug] [2025-05-17T00:22:02.537Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:02.537Z] Checked if tokens are valid: true, expires at: 1747443301718
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2025-05-17T00:22:02.538Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:02.538Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:02.538Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-05-17T00:22:02.538Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-17T00:22:02.539Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/runtimeconfig.googleapis.com [none]
+[debug] [2025-05-17T00:22:02.539Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-17T00:22:02.540Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudbuild.googleapis.com [none]
+[debug] [2025-05-17T00:22:02.540Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudbuild.googleapis.com x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-17T00:22:02.541Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/artifactregistry.googleapis.com [none]
+[debug] [2025-05-17T00:22:02.541Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/artifactregistry.googleapis.com x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-17T00:22:03.318Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudfunctions.googleapis.com 200
+[debug] [2025-05-17T00:22:03.318Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudfunctions.googleapis.com [omitted]
+[info] +  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2025-05-17T00:22:03.323Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/artifactregistry.googleapis.com 200
+[debug] [2025-05-17T00:22:03.324Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/artifactregistry.googleapis.com [omitted]
+[info] +  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2025-05-17T00:22:03.338Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudbuild.googleapis.com 200
+[debug] [2025-05-17T00:22:03.338Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudbuild.googleapis.com [omitted]
+[info] +  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2025-05-17T00:22:03.370Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/runtimeconfig.googleapis.com 200
+[debug] [2025-05-17T00:22:03.370Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2025-05-17T00:22:03.370Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:03.370Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:03.370Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/sync-pro-fe572/adminSdkConfig [none]
+[debug] [2025-05-17T00:22:03.665Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/sync-pro-fe572/adminSdkConfig 200
+[debug] [2025-05-17T00:22:03.665Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/sync-pro-fe572/adminSdkConfig {"projectId":"sync-pro-fe572","storageBucket":"sync-pro-fe572.firebasestorage.app"}
+[debug] [2025-05-17T00:22:03.666Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:03.666Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:03.667Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/sync-pro-fe572/configs [none]
+[debug] [2025-05-17T00:22:04.465Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/sync-pro-fe572/configs 200
+[debug] [2025-05-17T00:22:04.465Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/sync-pro-fe572/configs {}
+[debug] [2025-05-17T00:22:04.468Z] Validating nodejs source
+[debug] [2025-05-17T00:22:05.165Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts . --fix",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^12.6.0",
+    "firebase-functions": "^6.0.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^3.1.0",
+    "typescript": "^4.9.0"
+  },
+  "private": true
+}
+[debug] [2025-05-17T00:22:05.165Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2025-05-17T00:22:05.166Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-05-17T00:22:05.173Z] Found firebase-functions binary at 'C:\Users\conta\Desktop\sync-pro\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8608
+
+[debug] [2025-05-17T00:22:05.597Z] Got response from /__/functions.yaml {"endpoints":{"creerCompteUtilisateur":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["europe-west1"],"labels":{},"callableTrigger":{},"entryPoint":"creerCompteUtilisateur"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled... 
+[debug] [2025-05-17T00:22:09.627Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:09.627Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:09.627Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/firebaseextensions.googleapis.com [none]
+[debug] [2025-05-17T00:22:09.627Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/firebaseextensions.googleapis.com x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-17T00:22:10.437Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/firebaseextensions.googleapis.com 200
+[debug] [2025-05-17T00:22:10.437Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/firebaseextensions.googleapis.com [omitted]
+[info] +  extensions: required API firebaseextensions.googleapis.com is enabled 
+[debug] [2025-05-17T00:22:10.437Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-05-17T00:22:10.438Z] > authorizing via signed-in user (contact@javachrist.fr)
+[debug] [2025-05-17T00:22:10.438Z] [iam] checking project sync-pro-fe572 for permissions ["firebase.projects.get","firebaseextensions.instances.list"]
+[debug] [2025-05-17T00:22:10.438Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:10.438Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:10.438Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions [none]
+[debug] [2025-05-17T00:22:10.438Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-17T00:22:10.438Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2025-05-17T00:22:11.051Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions 200
+[debug] [2025-05-17T00:22:11.051Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2025-05-17T00:22:11.052Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:11.052Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:11.052Z] >>> [apiv2][query] GET https://firebaseextensions.googleapis.com/v1beta/projects/sync-pro-fe572/instances pageSize=100&pageToken=
+[debug] [2025-05-17T00:22:11.829Z] <<< [apiv2][status] GET https://firebaseextensions.googleapis.com/v1beta/projects/sync-pro-fe572/instances 200
+[debug] [2025-05-17T00:22:11.829Z] <<< [apiv2][body] GET https://firebaseextensions.googleapis.com/v1beta/projects/sync-pro-fe572/instances {}
+[info] i  functions: preparing functions directory for uploading... 
+[info] i  functions: packaged C:\Users\conta\Desktop\sync-pro\functions (90.49 KB) for uploading 
+[debug] [2025-05-17T00:22:11.872Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:11.872Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:11.872Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/sync-pro-fe572/locations/-/functions [none]
+[debug] [2025-05-17T00:22:12.470Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/sync-pro-fe572/locations/-/functions 200
+[debug] [2025-05-17T00:22:12.470Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/sync-pro-fe572/locations/-/functions {}
+[debug] [2025-05-17T00:22:12.471Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:12.471Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:12.471Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2025-05-17T00:22:13.440Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/-/functions 200
+[debug] [2025-05-17T00:22:13.440Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/sync-pro-fe572/locations/-/functions {"functions":[{"name":"projects/sync-pro-fe572/locations/europe-west1/functions/creerCompteUtilisateur","buildConfig":{"build":"projects/72872089595/locations/europe-west1/builds/86ce0a4d-6976-4f23-8d4e-73e4ea253bfe","runtime":"nodejs22","entryPoint":"creerCompteUtilisateur","source":{"storageSource":{"bucket":"gcf-v2-sources-72872089595-europe-west1","object":"creerCompteUtilisateur/function-source.zip","generation":"1747439766024493"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/sync-pro-fe572/locations/europe-west1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-72872089595-europe-west1","object":"creerCompteUtilisateur/function-source.zip","generation":"1747439766024493"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/sync-pro-fe572/serviceAccounts/72872089595-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"state":"FAILED","updateTime":"2025-05-16T23:56:36.763359944Z","labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"c1bad22e7bd9f1e55b91a06d01ea0501dfa04efe"},"stateMessages":[{"severity":"ERROR","type":"CloudRunServiceNotFound","message":"Cloud Run service projects/sync-pro-fe572/locations/europe-west1/services/creercompteutilisateur for the function was not found. The function will not work correctly. Please redeploy."}],"environment":"GEN_2","url":"https://europe-west1-sync-pro-fe572.cloudfunctions.net/creerCompteUtilisateur","createTime":"2025-05-16T23:56:06.446097584Z","satisfiesPzi":true}]}
+[info] i  functions: ensuring required API run.googleapis.com is enabled... 
+[debug] [2025-05-17T00:22:13.442Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:13.442Z] Checked if tokens are valid: true, expires at: 1747443301718
+[info] i  functions: ensuring required API eventarc.googleapis.com is enabled... 
+[debug] [2025-05-17T00:22:13.442Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:13.442Z] Checked if tokens are valid: true, expires at: 1747443301718
+[info] i  functions: ensuring required API pubsub.googleapis.com is enabled... 
+[debug] [2025-05-17T00:22:13.442Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:13.442Z] Checked if tokens are valid: true, expires at: 1747443301718
+[info] i  functions: ensuring required API storage.googleapis.com is enabled... 
+[debug] [2025-05-17T00:22:13.442Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:13.443Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:13.443Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/run.googleapis.com [none]
+[debug] [2025-05-17T00:22:13.443Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/run.googleapis.com x-goog-quota-user=projects/72872089595
+[debug] [2025-05-17T00:22:13.443Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/eventarc.googleapis.com [none]
+[debug] [2025-05-17T00:22:13.443Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/eventarc.googleapis.com x-goog-quota-user=projects/72872089595
+[debug] [2025-05-17T00:22:13.444Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/pubsub.googleapis.com [none]
+[debug] [2025-05-17T00:22:13.444Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/pubsub.googleapis.com x-goog-quota-user=projects/72872089595
+[debug] [2025-05-17T00:22:13.445Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/storage.googleapis.com [none]
+[debug] [2025-05-17T00:22:13.445Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/storage.googleapis.com x-goog-quota-user=projects/72872089595
+[debug] [2025-05-17T00:22:14.225Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/eventarc.googleapis.com 200
+[debug] [2025-05-17T00:22:14.225Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/eventarc.googleapis.com [omitted]
+[info] +  functions: required API eventarc.googleapis.com is enabled 
+[debug] [2025-05-17T00:22:14.233Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/storage.googleapis.com 200
+[debug] [2025-05-17T00:22:14.233Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/storage.googleapis.com [omitted]
+[info] +  functions: required API storage.googleapis.com is enabled 
+[debug] [2025-05-17T00:22:14.233Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/pubsub.googleapis.com 200
+[debug] [2025-05-17T00:22:14.233Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/pubsub.googleapis.com [omitted]
+[info] +  functions: required API pubsub.googleapis.com is enabled 
+[debug] [2025-05-17T00:22:14.334Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/run.googleapis.com 200
+[debug] [2025-05-17T00:22:14.334Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/72872089595/services/run.googleapis.com [omitted]
+[info] +  functions: required API run.googleapis.com is enabled 
+[info] i  functions: generating the service identity for pubsub.googleapis.com... 
+[debug] [2025-05-17T00:22:14.335Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:14.335Z] Checked if tokens are valid: true, expires at: 1747443301718
+[info] i  functions: generating the service identity for eventarc.googleapis.com... 
+[debug] [2025-05-17T00:22:14.335Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:14.335Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:14.335Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/72872089595/services/pubsub.googleapis.com:generateServiceIdentity [none]
+[debug] [2025-05-17T00:22:14.336Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/72872089595/services/eventarc.googleapis.com:generateServiceIdentity [none]
+[debug] [2025-05-17T00:22:14.712Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/72872089595/services/pubsub.googleapis.com:generateServiceIdentity 200
+[debug] [2025-05-17T00:22:14.712Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/72872089595/services/pubsub.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-72872089595@gcp-sa-pubsub.iam.gserviceaccount.com","uniqueId":"103491903430041180761"}}
+[debug] [2025-05-17T00:22:15.078Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/72872089595/services/eventarc.googleapis.com:generateServiceIdentity 200
+[debug] [2025-05-17T00:22:15.079Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/72872089595/services/eventarc.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-72872089595@gcp-sa-eventarc.iam.gserviceaccount.com","uniqueId":"103547668492949353935"}}
+[debug] [2025-05-17T00:22:15.082Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:15.082Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:15.082Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudresourcemanager.googleapis.com [none]
+[debug] [2025-05-17T00:22:15.082Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudresourcemanager.googleapis.com x-goog-quota-user=projects/sync-pro-fe572
+[debug] [2025-05-17T00:22:15.422Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudresourcemanager.googleapis.com 200
+[debug] [2025-05-17T00:22:15.422Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/sync-pro-fe572/services/cloudresourcemanager.googleapis.com [omitted]
+[debug] [2025-05-17T00:22:15.422Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:15.422Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:15.422Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572 [none]
+[debug] [2025-05-17T00:22:15.605Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572 200
+[debug] [2025-05-17T00:22:15.605Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/sync-pro-fe572 {"projectNumber":"72872089595","projectId":"sync-pro-fe572","lifecycleState":"ACTIVE","name":"sync-pro","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-05-16T16:43:16.160470Z","parent":{"type":"organization","id":"294271354232"}}
+[debug] [2025-05-17T00:22:15.606Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:15.606Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:15.606Z] >>> [apiv2][query] GET https://compute.googleapis.com/compute/v1/projects/72872089595 [none]
+[debug] [2025-05-17T00:22:15.829Z] <<< [apiv2][status] GET https://compute.googleapis.com/compute/v1/projects/72872089595 403
+[debug] [2025-05-17T00:22:15.829Z] <<< [apiv2][body] GET https://compute.googleapis.com/compute/v1/projects/72872089595 {"error":{"code":403,"message":"Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"containerInfo":"72872089595","consumer":"projects/72872089595","service":"compute.googleapis.com","serviceTitle":"Compute Engine API","activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595"}]}]}}
+[debug] [2025-05-17T00:22:15.830Z] unable to look up default compute service account. Falling back to 72872089595-compute@developer.gserviceaccount.com. Error: {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":403,"message":"Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"containerInfo":"72872089595","consumer":"projects/72872089595","service":"compute.googleapis.com","serviceTitle":"Compute Engine API","activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595"}]}]}},"response":{"statusCode":403}},"exit":1,"message":"Request to https://compute.googleapis.com/compute/v1/projects/72872089595 had HTTP Error: 403, Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","status":403}
+[debug] [2025-05-17T00:22:15.831Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:15.831Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:15.831Z] >>> [apiv2][query] GET https://compute.googleapis.com/compute/v1/projects/72872089595 [none]
+[debug] [2025-05-17T00:22:15.973Z] <<< [apiv2][status] GET https://compute.googleapis.com/compute/v1/projects/72872089595 403
+[debug] [2025-05-17T00:22:15.974Z] <<< [apiv2][body] GET https://compute.googleapis.com/compute/v1/projects/72872089595 {"error":{"code":403,"message":"Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595","service":"compute.googleapis.com","containerInfo":"72872089595","serviceTitle":"Compute Engine API","consumer":"projects/72872089595"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595"}]}]}}
+[debug] [2025-05-17T00:22:15.974Z] unable to look up default compute service account. Falling back to 72872089595-compute@developer.gserviceaccount.com. Error: {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":403,"message":"Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595","service":"compute.googleapis.com","containerInfo":"72872089595","serviceTitle":"Compute Engine API","consumer":"projects/72872089595"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595"}]}]}},"response":{"statusCode":403}},"exit":1,"message":"Request to https://compute.googleapis.com/compute/v1/projects/72872089595 had HTTP Error: 403, Compute Engine API has not been used in project 72872089595 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=72872089595 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","status":403}
+[debug] [2025-05-17T00:22:15.976Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:15.976Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:15.976Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/sync-pro-fe572/billingInfo [none]
+[debug] [2025-05-17T00:22:16.271Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/sync-pro-fe572/billingInfo 200
+[debug] [2025-05-17T00:22:16.271Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/sync-pro-fe572/billingInfo {"name":"projects/sync-pro-fe572/billingInfo","projectId":"sync-pro-fe572","billingAccountName":"billingAccounts/011311-B2EADD-7A6C98","billingEnabled":true}
+[info] i  functions: updating Node.js 22 (2nd Gen) function creerCompteUtilisateur(europe-west1)... 
+[debug] [2025-05-17T00:22:16.276Z] Precondition failed. Cannot update a GCFv2 function without storage
+[debug] [2025-05-17T00:22:16.280Z] Total Function Deployment time: 1
+[debug] [2025-05-17T00:22:16.280Z] 1 Functions Deployed
+[debug] [2025-05-17T00:22:16.280Z] 1 Functions Errored
+[debug] [2025-05-17T00:22:16.280Z] 0 Function Deployments Aborted
+[debug] [2025-05-17T00:22:16.280Z] Average Function Deployment time: 0
+[info] 
+[info] Functions deploy had errors with the following functions:
+	creerCompteUtilisateur(europe-west1)
+[debug] [2025-05-17T00:22:16.347Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:16.348Z] Checked if tokens are valid: true, expires at: 1747443301718
+[debug] [2025-05-17T00:22:16.348Z] >>> [apiv2][query] GET https://artifactregistry.googleapis.com/v1/projects/sync-pro-fe572/locations/europe-west1/repositories/gcf-artifacts [none]
+[debug] [2025-05-17T00:22:16.487Z] <<< [apiv2][status] GET https://artifactregistry.googleapis.com/v1/projects/sync-pro-fe572/locations/europe-west1/repositories/gcf-artifacts 200
+[debug] [2025-05-17T00:22:16.487Z] <<< [apiv2][body] GET https://artifactregistry.googleapis.com/v1/projects/sync-pro-fe572/locations/europe-west1/repositories/gcf-artifacts {"name":"projects/sync-pro-fe572/locations/europe-west1/repositories/gcf-artifacts","format":"DOCKER","description":"This repository is created and used by Cloud Functions for storing function docker images.","labels":{"goog-managed-by":"cloudfunctions"},"createTime":"2025-05-16T23:56:16.723459Z","updateTime":"2025-05-16T23:56:53.330512Z","mode":"STANDARD_REPOSITORY","cleanupPolicies":{"firebase-functions-cleanup":{"id":"firebase-functions-cleanup","action":"DELETE","condition":{"tagState":"ANY","olderThan":"2592000s"}}},"vulnerabilityScanningConfig":{"lastEnableTime":"2025-05-16T23:56:06.625380621Z","enablementState":"SCANNING_DISABLED","enablementStateReason":"API containerscanning.googleapis.com is not enabled."},"satisfiesPzi":true,"registryUri":"europe-west1-docker.pkg.dev/sync-pro-fe572/gcf-artifacts"}
+[debug] [2025-05-17T00:22:16.488Z] Functions deploy failed.
+[debug] [2025-05-17T00:22:16.488Z] {}
+[debug] [2025-05-17T00:22:16.508Z] Error: Precondition failed
+    at Fabricator.updateV2Function (C:\Users\conta\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:382:19)
+    at Fabricator.updateEndpoint (C:\Users\conta\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:155:24)
+    at C:\Users\conta\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:110:71
+    at handle (C:\Users\conta\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:89:23)
+    at Fabricator.applyChangeset (C:\Users\conta\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:110:26)
+    at C:\Users\conta\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:69:40
+    at Array.map (<anonymous>)
+    at Fabricator.applyPlan (C:\Users\conta\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:68:54)
+    at release (C:\Users\conta\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\index.js:76:31)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[error] 
+[error] Error: There was an error deploying functions
