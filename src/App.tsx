@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 import { auth } from './firebaseConfig'; // Importer auth
 import { onAuthStateChanged, User } from 'firebase/auth'; // Importer onAuthStateChanged et User
 import './App.css'; // Assure-toi que ce fichier existe si tu veux l'utiliser
@@ -41,6 +42,11 @@ function App() {
         <Route 
           path="/dashboard" 
           element={currentUser ? <DashboardPage /> : <Navigate to="/login" replace />}
+        />
+        {/* Route pour la réinitialisation de mot de passe - accessible par tous */}
+        <Route 
+          path="/reset-password" 
+          element={<ResetPasswordPage />}
         />
         {/* Redirection par défaut */}
         <Route 

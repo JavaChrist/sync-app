@@ -106,7 +106,13 @@ const LoginPage: React.FC = () => {
         return;
       }
 
-      await sendPasswordResetEmail(auth, userEmail);
+      // Utiliser l'URL personnalisée pour la réinitialisation
+      const actionCodeSettings = {
+        url: window.location.origin + '/reset-password',
+        handleCodeInApp: true
+      };
+      
+      await sendPasswordResetEmail(auth, userEmail, actionCodeSettings);
       setInfo(`Un email de réinitialisation a été envoyé à l'adresse associée à ce NNI.`);
 
     } catch (err: any) {
