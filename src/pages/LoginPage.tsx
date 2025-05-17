@@ -108,7 +108,10 @@ const LoginPage: React.FC = () => {
 
       // Utiliser l'URL personnalisée pour la réinitialisation
       const actionCodeSettings = {
-        url: window.location.origin + '/reset-password',
+        // Utiliser l'URL de production même en développement pour les tests d'email
+        url: process.env.NODE_ENV === 'production' 
+          ? 'https://sync-pro.javachrist.eu/reset-password'
+          : window.location.origin + '/reset-password',
         handleCodeInApp: true
       };
       
