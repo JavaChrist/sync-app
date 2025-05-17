@@ -3,9 +3,11 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
+import DocumentManager from './pages/DocumentManager';
 import { auth } from './firebaseConfig'; // Importer auth
 import { onAuthStateChanged, User } from 'firebase/auth'; // Importer onAuthStateChanged et User
 import './App.css'; // Assure-toi que ce fichier existe si tu veux l'utiliser
+import { ThemeProvider } from './context/ThemeContext'; // Importer le ThemeProvider
 
 function App() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -25,36 +27,42 @@ function App() {
   // Afficher un indicateur de chargement pendant que l'état d'auth est vérifié
   if (loadingAuthState) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <p className="text-gray-700">Chargement de l'application...</p>
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-800 dark:text-white">
+        <p className="text-gray-700 dark:text-gray-200">Chargement de l'application...</p>
         {/* Tu peux ajouter un spinner ou un indicateur plus sophistiqué ici */}
       </div>
     );
   }
 
   return (
-    <Router>
-      <Routes>
-        <Route 
-          path="/login" 
-          element={!currentUser ? <LoginPage /> : <Navigate to="/dashboard" replace />}
-        />
-        <Route 
-          path="/dashboard" 
-          element={currentUser ? <DashboardPage /> : <Navigate to="/login" replace />}
-        />
-        {/* Route pour la réinitialisation de mot de passe - accessible par tous */}
-        <Route 
-          path="/reset-password" 
-          element={<ResetPasswordPage />}
-        />
-        {/* Redirection par défaut */}
-        <Route 
-          path="*" 
-          element={<Navigate to={currentUser ? "/dashboard" : "/login"} replace />}
-        />
-      </Routes>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <Routes>
+          <Route 
+            path="/login" 
+            element={!currentUser ? <LoginPage /> : <Navigate to="/dashboard" replace />}
+          />
+          <Route 
+            path="/dashboard" 
+            element={currentUser ? <DashboardPage /> : <Navigate to="/login" replace />}
+          />
+          <Route 
+            path="/documents" 
+            element={currentUser ? <DocumentManager /> : <Navigate to="/login" replace />}
+          />
+          {/* Route pour la réinitialisation de mot de passe - accessible par tous */}
+          <Route 
+            path="/reset-password" 
+            element={<ResetPasswordPage />}
+          />
+          {/* Redirection par défaut */}
+          <Route 
+            path="*" 
+            element={<Navigate to={currentUser ? "/dashboard" : "/login"} replace />}
+          />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 

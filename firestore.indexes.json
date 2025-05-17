@@ -1,4 +1,21 @@
 {
-  "indexes": [],
+  "indexes": [
+    {
+      "collectionGroup": "dossiers",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "parent", "order": "ASCENDING" },
+        { "fieldPath": "ordre", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "dossiers",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "parent", "order": "ASCENDING" },
+        { "fieldPath": "ordre", "order": "DESCENDING" }
+      ]
+    }
+  ],
   "fieldOverrides": []
 }

@@ -4,6 +4,7 @@ import { auth, db } from '../firebaseConfig';
 import { signOut, sendPasswordResetEmail, deleteUser } from 'firebase/auth';
 import { doc, getDoc, setDoc, collection, query, where, getDocs, deleteDoc } from "firebase/firestore";
 import { getFunctions, httpsCallable } from 'firebase/functions';
+import ThemeToggle from '../components/ThemeToggle';
 
 interface UserData {
   nni: string;
@@ -261,10 +262,18 @@ const DashboardPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-800 flex">
       {/* Sidebar */}
-      <div className="w-64 bg-gray-800 text-white p-6 space-y-6 flex flex-col">
-        <h2 className="text-xl font-semibold border-b border-gray-700 pb-4">Menu</h2>
+      <div className="w-64 bg-gray-800 dark:bg-gray-900 text-white p-6 space-y-6 flex flex-col">
+        {/* Logo EDF */}
+        <div className="flex justify-center mb-4">
+          <img src="/logo-edf.png" alt="Logo EDF" className="h-20 w-auto" />
+        </div>
+        
+        <div className="flex justify-between items-center border-b border-gray-700 pb-4">
+          <h2 className="text-xl font-semibold">Menu</h2>
+          <ThemeToggle />
+        </div>
         
         <nav className="flex-grow">
           {/* Boutons pour les admins */}
@@ -278,12 +287,20 @@ const DashboardPage: React.FC = () => {
               </button>
               <button
                 onClick={handleOpenDeleteAccountModal}
-                className="w-full text-left py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white block"
+                className="w-full text-left py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white block mb-2"
               >
                 Supprimer un compte
               </button>
             </>
           )}
+          
+          {/* Lien vers la gestion documentaire */}
+          <a
+            href="/documents"
+            className="w-full text-left py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white block mb-2"
+          >
+            Gestion Documentaire
+          </a>
         </nav>
 
         {/* Bouton de déconnexion */}
@@ -296,26 +313,13 @@ const DashboardPage: React.FC = () => {
       </div>
 
       {/* Contenu Principal */}
-      <div className="flex-grow p-12 flex flex-col items-center">
-        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl">
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold text-gray-800">Tableau de Bord</h1>
-          </div>
-
-          {auth.currentUser && (
-            <p className="mb-2 text-gray-600">
-              Connecté en tant que: <span className="font-medium">{auth.currentUser.email}</span>
-            </p>
-          )}
+      <div className="flex-grow p-12 flex flex-col items-center bg-gray-100 dark:bg-gray-800">
+        <div className="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-md w-full max-w-4xl">
           {userData && userData.nni && (
-            <p className="mb-6 text-gray-600">
-              NNI: <span className="font-medium">{userData.nni}</span>
+            <p className="mb-6 text-gray-600 dark:text-gray-300">
+              <span className="text-blue-600 dark:text-blue-400 font-medium">NNI:</span> <span className="text-blue-600 dark:text-blue-400 font-medium">{userData.nni}</span>
             </p>
           )}
-          
-          <p className="mb-8 text-gray-700">
-            Bienvenue sur votre tableau de bord !
-          </p>
 
           {/* Le contenu principal du dashboard est gardé vide pour le moment */}
         </div>
