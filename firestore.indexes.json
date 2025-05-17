@@ -15,6 +15,14 @@
         { "fieldPath": "parent", "order": "ASCENDING" },
         { "fieldPath": "ordre", "order": "DESCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "commentaires",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "documentId", "order": "ASCENDING" },
+        { "fieldPath": "dateCreation", "order": "DESCENDING" }
+      ]
     }
   ],
   "fieldOverrides": []

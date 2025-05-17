@@ -5,7 +5,7 @@ export interface FolderType {
   niveau: number;
   parent: string | null;
   ordre: number;
-  dateCreation: Date;
+  dateCreation: Date | any;
   creePar: string;
 }
 
@@ -16,7 +16,8 @@ export interface FileType {
   taille: number;
   dossierId: string;
   cheminStockage: string;
-  dateUpload: Date;
+  dateUpload: Date | any;
+  dateCreation: Date | any;
   uploadPar: string;
   url: string;
 } 

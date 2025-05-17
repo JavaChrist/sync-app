@@ -23,6 +23,22 @@ service cloud.firestore {
                             (resource.data.uploadPar == request.auth.uid || 
                              get(/databases/$(database)/documents/utilisateurs/$(request.auth.uid)).data.role == 'admin');
     }
+    
+    match /commentaires/{commentaireID} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null && 
+                            (resource.data.auteurId == request.auth.uid || 
+                             get(/databases/$(database)/documents/utilisateurs/$(request.auth.uid)).data.role == 'admin');
+    }
+    
+    match /activites/{activiteID} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null && 
+                           (request.auth.uid == resource.data.utilisateurId || 
+                            get(/databases/$(database)/documents/utilisateurs/$(request.auth.uid)).data.role == 'admin');
+    }
 
     match /{document=**} {
       allow read, write: if false;

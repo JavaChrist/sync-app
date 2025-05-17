@@ -137,7 +137,7 @@ const LoginPage: React.FC = () => {
       console.log("Utilisateur connecté:", user.uid);
       try {
         // Exemple: lire un document utilisateur après connexion
-        const userDocRef = doc(db, "users", user.uid);
+        const userDocRef = doc(db, "utilisateurs", user.uid);
         const userDocSnap = await getDoc(userDocRef);
         if (userDocSnap.exists()) {
           console.log("Données utilisateur:", userDocSnap.data());
