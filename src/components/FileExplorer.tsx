@@ -116,6 +116,25 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
     loadFoldersAndFiles();
   }, [currentPath]);
 
+  // Ajout d'un effet pour la recherche automatique après un délai
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      // Si la recherche est vide, réinitialiser
+      if (isSearching) {
+        clearSearch();
+      }
+      return;
+    }
+
+    // Attendre 500ms après que l'utilisateur ait arrêté de taper pour lancer la recherche
+    const searchTimeout = setTimeout(() => {
+      handleSearch(searchQuery);
+    }, 500);
+
+    // Nettoyer le timeout si l'utilisateur continue à taper
+    return () => clearTimeout(searchTimeout);
+  }, [searchQuery]);
+
   // Fonction pour trier les fichiers
   const sortFiles = (filesToSort: FileType[]): FileType[] => {
     return [...filesToSort].sort((a, b) => {
@@ -487,9 +506,8 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
   // Fonction pour effectuer une recherche de fichiers
   const handleSearch = async (query: string) => {
     // Si on efface la recherche
-    if (!query) {
-      setIsSearching(false);
-      setSearchResults([]);
+    if (!query.trim()) {
+      clearSearch();
       return;
     }
     
@@ -514,11 +532,12 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
       } as FileType));
       
       // Filtrer les fichiers selon le terme de recherche (insensible à la casse)
-      const queryLower = query.toLowerCase();
+      const queryLower = query.toLowerCase().trim();
       const filteredFiles = allFiles.filter(file => 
         file.nom.toLowerCase().includes(queryLower)
       );
       
+      console.log(`Recherche pour "${query}" : ${filteredFiles.length} résultats trouvés`);
       setSearchResults(filteredFiles);
     } catch (err) {
       console.error('Erreur lors de la recherche:', err);
@@ -540,163 +559,296 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
 
   // Fonction pour ouvrir la caméra
   const handleOpenCamera = () => {
+    console.log("Ouverture de la caméra...");
     setShowCamera(true);
   };
 
   // Fonction appelée après le téléversement d'une photo
   const handlePhotoUploaded = () => {
+    console.log("Photo téléversée avec succès!");
     // Rafraîchir la liste des fichiers
     loadFoldersAndFiles();
   };
 
   return (
-    <div className="h-full flex flex-col">
-      {/* Barre d'outils */}
-      <div className="bg-white dark:bg-gray-800 p-2 border-b border-gray-200 dark:border-gray-700 flex flex-wrap items-center justify-between">
-        {/* Chemin de navigation */}
-        <div className="flex items-center space-x-1 mb-2 md:mb-0 w-full md:w-auto overflow-x-auto">
-          <button
-            onClick={() => setCurrentPath('')}
-            className="flex items-center px-2 py-1 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
-          >
-            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
-            Accueil
-          </button>
-          {currentPath && 
-            currentPath.split('/').filter(Boolean).map((segment, index, array) => {
-              const pathToSegment = array.slice(0, index + 1).join('/');
+    <div className="bg-white dark:bg-gray-750 rounded-lg shadow-md overflow-hidden">
+      {/* En-tête avec outils */}
+      <div className="border-b border-gray-200 dark:border-gray-700 p-4">
+        <div className="flex flex-col md:flex-row md:items-center mb-4">
+          {/* Fil d'Ariane */}
+          <div className="mb-2 md:mb-0 md:mr-4 text-sm text-gray-600 dark:text-gray-400 flex items-center overflow-x-auto whitespace-nowrap pb-2 md:pb-0">
+            <button 
+              onClick={() => setCurrentPath('')}
+              className="text-blue-600 dark:text-blue-400 hover:underline px-2 py-1 rounded transition-colors"
+            >
+              Racine
+            </button>
+            
+            {/* Afficher le chemin actuel sous forme de fil d'Ariane */}
+            {currentPath && currentPath.split('/').map((segment, index, array) => {
+              // Construire le chemin pour ce segment
+              const pathToHere = array.slice(0, index + 1).join('/');
               return (
-                <React.Fragment key={pathToSegment}>
-                  <span className="text-gray-500 dark:text-gray-500">/</span>
+                <div key={index} className="flex items-center">
+                  <span className="mx-2 text-gray-400">/</span>
                   <button 
-                    onClick={() => setCurrentPath(pathToSegment)}
-                    className="px-2 py-1 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+                    onClick={() => handleBreadcrumbClick(pathToHere)}
+                    className="text-blue-600 dark:text-blue-400 hover:underline px-2 py-1 rounded transition-colors"
                   >
                     {segment}
                   </button>
-                </React.Fragment>
+                </div>
               );
-            })
-          }
-        </div>
-        
-        {/* Actions */}
-        <div className="flex flex-wrap items-center space-x-2 w-full md:w-auto justify-between md:justify-end mt-2 md:mt-0">
-          <div className="flex space-x-2">
-            {/* Bouton upload */}
-            <label className="group relative flex justify-center items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-              </svg>
-              Téléverser
-              <input 
-                type="file" 
-                className="absolute inset-0 opacity-0 cursor-pointer" 
-                onChange={handleFileUpload} 
-                multiple={false}
-              />
-            </label>
-            
-            {/* Bouton nouveau dossier */}
-            <button 
-              onClick={() => setCreateFolderModalOpen(true)}
-              className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 flex items-center"
-            >
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-              </svg>
-              <span className="hidden sm:inline">Nouveau dossier</span>
-              <span className="sm:hidden">Dossier</span>
-            </button>
+            })}
           </div>
           
-          <div className="flex space-x-2 mt-2 md:mt-0">
-            {/* Bouton bascule vue liste/grille */}
-            <button
-              onClick={toggleViewMode}
-              className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md flex items-center"
-              title={viewMode === 'list' ? 'Afficher en grille' : 'Afficher en liste'}
+          {/* Boutons d'actions */}
+          <div className="flex items-center space-x-2 ml-auto">
+            <button 
+              onClick={() => setCreateFolderModalOpen(true)}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm flex items-center"
             >
-              {viewMode === 'list' ? (
-                <>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                  </svg>
-                  <span className="ml-2 hidden lg:inline">Grille</span>
-                </>
-              ) : (
-                <>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                  <span className="ml-2 hidden lg:inline">Liste</span>
-                </>
-              )}
+              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+              </svg>
+              Nouveau dossier
             </button>
             
-            {/* Bouton photo pour mobile */}
+            <label className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm flex items-center cursor-pointer">
+              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+              </svg>
+              Uploader
+              <input type="file" className="hidden" onChange={handleFileUpload} />
+            </label>
+            
             <button 
               onClick={handleOpenCamera}
-              className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md flex items-center md:hidden"
-              title="Prendre une photo"
+              className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded text-sm flex items-center"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
               </svg>
+              Photo
+            </button>
+            
+            <button 
+              onClick={toggleViewMode}
+              className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 px-2 py-1 rounded text-sm"
+            >
+              {viewMode === 'list' ? (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                </svg>
+              )}
             </button>
           </div>
         </div>
-      </div>
-      
-      {/* Barre de recherche */}
-      <div className="p-2 border-b border-gray-200 dark:border-gray-700">
-        <div className="relative">
-          <input
-            type="text"
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-            placeholder="Rechercher un fichier..."
-            value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              handleSearch(e.target.value);
-            }}
-          />
-          <svg className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-          </svg>
-          {searchQuery && (
-            <button
-              onClick={clearSearch}
-              className="absolute right-3 top-2.5 h-5 w-5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-            >
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+        
+        {/* Barre de recherche */}
+        <div className="flex items-center">
+          <div className="relative w-full">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
               </svg>
-            </button>
-          )}
+            </div>
+            <input
+              type="text"
+              placeholder="Rechercher des fichiers... (recherche automatique)"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Escape') {
+                  clearSearch();
+                }
+              }}
+              className="w-full pl-10 pr-10 py-2 rounded border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+            />
+            {searchQuery && (
+              <button
+                onClick={clearSearch}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            )}
+          </div>
         </div>
       </div>
-      
-      {/* Contenu principal */}
-      <div className="flex-grow overflow-auto p-2">
-        {/* Affichage des erreurs */}
+
+      {/* Corps du gestionnaire de fichiers */}
+      <div className="p-3 overflow-x-hidden">
+        {/* Message d'erreur */}
         {error && (
-          <div className="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 p-4 mb-4 rounded shadow">
-            <p className="text-red-700 dark:text-red-400 text-sm">{error}</p>
+          <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4">
+            <p>{error}</p>
           </div>
         )}
-        
+
+        {/* Indicateur de chargement */}
         {isLoading ? (
-          <div className="flex justify-center items-center h-full">
-            <svg className="animate-spin h-10 w-10 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
+          <div className="py-10 text-center">
+            <p className="text-gray-600 dark:text-gray-400">Chargement...</p>
           </div>
+        ) : isSearching ? (
+          // Résultats de recherche
+          <>
+            <h3 className="text-lg font-medium mb-4 text-gray-700 dark:text-gray-300">
+              Résultats de recherche pour "{searchQuery}" ({searchResults.length} fichiers)
+            </h3>
+            
+            {searchResults.length === 0 ? (
+              <p className="text-gray-600 dark:text-gray-400 italic">Aucun résultat trouvé.</p>
+            ) : viewMode === 'list' ? (
+              // Affichage en liste des résultats de recherche
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                  <thead>
+                    <tr>
+                      <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer" onClick={() => handleSort('nom')}>
+                        Nom {sortField === 'nom' && (sortDirection === 'asc' ? '↑' : '↓')}
+                      </th>
+                      <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer" onClick={() => handleSort('type')}>
+                        Type {sortField === 'type' && (sortDirection === 'asc' ? '↑' : '↓')}
+                      </th>
+                      <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer" onClick={() => handleSort('taille')}>
+                        Taille {sortField === 'taille' && (sortDirection === 'asc' ? '↑' : '↓')}
+                      </th>
+                      <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer" onClick={() => handleSort('dateUpload')}>
+                        Date {sortField === 'dateUpload' && (sortDirection === 'asc' ? '↑' : '↓')}
+                      </th>
+                      <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white dark:bg-gray-750 divide-y divide-gray-200 dark:divide-gray-700">
+                    {sortFiles(searchResults).map(file => (
+                      <tr key={file.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <td className="px-3 py-3 whitespace-nowrap">
+                          <a 
+                            href={file.url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-blue-600 dark:text-blue-400 hover:underline"
+                          >
+                            {file.nom}
+                          </a>
+                        </td>
+                        <td className="px-3 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{file.type || 'Inconnu'}</td>
+                        <td className="px-3 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{formatFileSize(file.taille)}</td>
+                        <td className="px-3 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{formatDate(file.dateUpload)}</td>
+                        <td className="px-3 py-3 whitespace-nowrap text-sm font-medium space-x-1 flex">
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleShowFileComments(file);
+                            }}
+                            className="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                            </svg>
+                          </button>
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDownloadFile(file);
+                            }}
+                            className="text-green-600 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                          </button>
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteFile(file);
+                            }}
+                            className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              // Affichage en grille des résultats de recherche
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                {sortFiles(searchResults).map((file) => (
+                  <div key={file.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md border border-gray-200 dark:border-gray-700 p-4 flex flex-col items-center relative group">
+                    <svg className="w-10 h-10 text-blue-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                    <a
+                      href={file.url}
+                      className="text-sm font-medium text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 text-center truncate w-full"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {file.nom}
+                    </a>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      {formatFileSize(file.taille)}
+                    </p>
+                    <div className="flex mt-2 space-x-2">
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleShowFileComments(file);
+                        }}
+                        className="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300"
+                        title="Voir les commentaires"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                        </svg>
+                      </button>
+                      
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDownloadFile(file);
+                        }}
+                        className="text-green-600 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                      </button>
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteFile(file);
+                        }}
+                        className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
         ) : (
+          // Vue normale des dossiers et fichiers
           <>
             {folders.length === 0 && files.length === 0 ? (
               <div className="text-center py-12">
@@ -738,8 +890,7 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
                               <svg className="flex-shrink-0 h-5 w-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fillRule="evenodd" d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z" clipRule="evenodd" />
-                                <path d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z" />
+                                <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
                               </svg>
                               <span 
                                 className="ml-2 text-sm font-medium text-gray-900 dark:text-white cursor-pointer hover:text-blue-600 dark:hover:text-blue-400"
@@ -824,7 +975,10 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
                             </button>
                             
                             <button 
-                              onClick={() => handleDownloadFile(file)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDownloadFile(file);
+                              }}
                               className="text-green-600 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300"
                             >
                               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -832,7 +986,10 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
                               </svg>
                             </button>
                             <button 
-                              onClick={() => handleDeleteFile(file)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDeleteFile(file);
+                              }}
                               className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300"
                             >
                               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -916,7 +1073,10 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
                         </button>
                         
                         <button 
-                          onClick={() => handleDownloadFile(file)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDownloadFile(file);
+                          }}
                           className="text-green-600 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300"
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -924,7 +1084,10 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
                           </svg>
                         </button>
                         <button 
-                          onClick={() => handleDeleteFile(file)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteFile(file);
+                          }}
                           className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300"
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -968,8 +1131,11 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
       {/* Afficher la caméra si nécessaire */}
       {showCamera && (
         <CameraCapture
-          currentPath={currentPath}
-          onClose={() => setShowCamera(false)}
+          currentPath={currentPath || 'root'}
+          onClose={() => {
+            console.log("Fermeture de la caméra");
+            setShowCamera(false);
+          }}
           onPhotoUploaded={handlePhotoUploaded}
         />
       )}

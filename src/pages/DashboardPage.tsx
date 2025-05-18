@@ -46,6 +46,7 @@ const DashboardPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [isCreateAccountModalOpen, setIsCreateAccountModalOpen] = useState<boolean>(false);
   const [isDeleteAccountModalOpen, setIsDeleteAccountModalOpen] = useState<boolean>(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
   // États pour le formulaire de création de compte dans la modale
   const [newNni, setNewNni] = useState<string>('');
@@ -412,9 +413,33 @@ const DashboardPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-800 flex">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-800 flex relative overflow-x-hidden">
+      {/* Bouton hamburger pour mobile */}
+      <button 
+        className="lg:hidden fixed top-4 left-4 z-50 bg-gray-800 dark:bg-gray-900 text-white p-2 rounded-md"
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          {isSidebarOpen ? (
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          ) : (
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          )}
+        </svg>
+      </button>
+
+      {/* Overlay pour fermer le menu sur mobile */}
+      {isSidebarOpen && (
+        <div 
+          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+          onClick={() => setIsSidebarOpen(false)}
+        ></div>
+      )}
+
       {/* Sidebar */}
-      <div className="w-64 bg-gray-800 dark:bg-gray-900 text-white p-6 space-y-6 flex flex-col">
+      <div className={`lg:w-56 bg-gray-800 dark:bg-gray-900 text-white p-6 space-y-6 flex flex-col fixed lg:relative h-screen z-40 transition-all duration-300 transform ${
+        isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full w-0 lg:translate-x-0 lg:w-56'
+      } overflow-hidden`}>
         {/* Logo EDF */}
         <div className="flex justify-center mb-4">
           <img src="/logo-edf.png" alt="Logo EDF" className="h-20 w-auto" />
@@ -463,8 +488,8 @@ const DashboardPage: React.FC = () => {
       </div>
 
       {/* Contenu Principal - Tableau de bord */}
-      <div className="flex-grow p-6 overflow-auto">
-        <div className="mb-8">
+      <div className="flex-grow p-4 md:p-6 lg:ml-0 overflow-x-hidden">
+        <div className="mb-8 mt-8 lg:mt-0 max-w-7xl mx-auto">
           <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Tableau de bord</h1>
           <p className="text-gray-600 dark:text-gray-400">Bienvenue, {userData?.nni || 'Utilisateur'}</p>
         </div>
@@ -474,37 +499,37 @@ const DashboardPage: React.FC = () => {
             <p className="text-gray-600 dark:text-gray-400">Chargement des données...</p>
           </div>
         ) : (
-          <>
+          <div className="max-w-7xl mx-auto">
             {/* Statistiques d'utilisation */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-              <div className="bg-white dark:bg-gray-750 p-6 rounded-lg shadow-md border-l-4 border-blue-500">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 overflow-x-hidden">
+              <div className="bg-white dark:bg-gray-750 p-4 rounded-lg shadow-md border-l-4 border-blue-500">
                 <h3 className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">Total des fichiers</h3>
                 <p className="text-2xl font-bold text-gray-800 dark:text-white">{stats.totalFiles}</p>
               </div>
               
-              <div className="bg-white dark:bg-gray-750 p-6 rounded-lg shadow-md border-l-4 border-green-500">
+              <div className="bg-white dark:bg-gray-750 p-4 rounded-lg shadow-md border-l-4 border-green-500">
                 <h3 className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">Total des dossiers</h3>
                 <p className="text-2xl font-bold text-gray-800 dark:text-white">{stats.totalFolders}</p>
               </div>
               
-              <div className="bg-white dark:bg-gray-750 p-6 rounded-lg shadow-md border-l-4 border-purple-500">
+              <div className="bg-white dark:bg-gray-750 p-4 rounded-lg shadow-md border-l-4 border-purple-500">
                 <h3 className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">Espace utilisé</h3>
                 <p className="text-2xl font-bold text-gray-800 dark:text-white">{formatFileSize(stats.totalSize)}</p>
               </div>
               
-              <div className="bg-white dark:bg-gray-750 p-6 rounded-lg shadow-md border-l-4 border-yellow-500">
+              <div className="bg-white dark:bg-gray-750 p-4 rounded-lg shadow-md border-l-4 border-yellow-500">
                 <h3 className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">Dernier téléversement</h3>
                 <p className="text-xl font-bold text-gray-800 dark:text-white">{stats.lastUploadDate ? formatDate(stats.lastUploadDate) : 'Aucun'}</p>
               </div>
             </div>
 
             {/* Section des documents récents */}
-            <div className="bg-white dark:bg-gray-750 rounded-lg shadow-md mb-8">
-              <div className="border-b border-gray-200 dark:border-gray-700 p-6">
+            <div className="bg-white dark:bg-gray-750 rounded-lg shadow-md mb-8 overflow-hidden">
+              <div className="border-b border-gray-200 dark:border-gray-700 p-4">
                 <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Documents récents</h2>
               </div>
               
-              <div className="p-6">
+              <div className="p-4">
                 {recentFiles.length === 0 ? (
                   <p className="text-gray-500 dark:text-gray-400 text-sm italic">Aucun document récent</p>
                 ) : (
@@ -512,16 +537,16 @@ const DashboardPage: React.FC = () => {
                     <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                       <thead>
                         <tr>
-                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Nom</th>
-                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Type</th>
-                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Taille</th>
-                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
+                          <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Nom</th>
+                          <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Type</th>
+                          <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Taille</th>
+                          <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
                         </tr>
                       </thead>
                       <tbody className="bg-white dark:bg-gray-750 divide-y divide-gray-200 dark:divide-gray-700">
                         {recentFiles.map(file => (
                           <tr key={file.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                            <td className="px-6 py-4 whitespace-nowrap">
+                            <td className="px-4 py-4 whitespace-nowrap">
                               <a 
                                 href={file.url} 
                                 target="_blank" 
@@ -531,9 +556,9 @@ const DashboardPage: React.FC = () => {
                                 {file.nom}
                               </a>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{file.type || 'Inconnu'}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{formatFileSize(file.taille)}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{formatDate(file.dateCreation)}</td>
+                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{file.type || 'Inconnu'}</td>
+                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{formatFileSize(file.taille)}</td>
+                            <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{formatDate(file.dateCreation)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -552,16 +577,16 @@ const DashboardPage: React.FC = () => {
             </div>
 
             {/* Section des dossiers favoris */}
-            <div className="bg-white dark:bg-gray-750 rounded-lg shadow-md">
-              <div className="border-b border-gray-200 dark:border-gray-700 p-6">
+            <div className="bg-white dark:bg-gray-750 rounded-lg shadow-md overflow-hidden">
+              <div className="border-b border-gray-200 dark:border-gray-700 p-4">
                 <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Dossiers principaux</h2>
               </div>
               
-              <div className="p-6">
+              <div className="p-4">
                 {favoriteFolders.length === 0 ? (
                   <p className="text-gray-500 dark:text-gray-400 text-sm italic">Aucun dossier</p>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {favoriteFolders.map(folder => (
                       <div 
                         key={folder.id}
@@ -572,10 +597,7 @@ const DashboardPage: React.FC = () => {
                           <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
                         </svg>
                         <div>
-                          <h3 className="text-blue-600 dark:text-blue-400 font-medium mb-1">{folder.nom}</h3>
-                          <p className="text-xs text-gray-600 dark:text-gray-400">
-                            Créé le: {formatDate(folder.dateCreation)}
-                          </p>
+                          <h3 className="text-blue-600 dark:text-blue-400 font-medium">{folder.nom}</h3>
                         </div>
                       </div>
                     ))}
@@ -583,7 +605,7 @@ const DashboardPage: React.FC = () => {
                 )}
               </div>
             </div>
-          </>
+          </div>
         )}
       </div>
 

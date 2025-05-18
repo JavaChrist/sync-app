@@ -14,6 +14,7 @@ const DocumentManager: React.FC = () => {
   const [userId, setUserId] = useState<string>('');
   const [userRole, setUserRole] = useState<string>('');
   const [dataInitialized, setDataInitialized] = useState<boolean>(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
   useEffect(() => {
     // Vérifier si l'utilisateur est connecté
@@ -90,9 +91,33 @@ const DocumentManager: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-800 flex">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-800 flex relative overflow-x-hidden">
+      {/* Bouton hamburger pour mobile */}
+      <button 
+        className="lg:hidden fixed top-4 left-4 z-50 bg-gray-800 dark:bg-gray-900 text-white p-2 rounded-md"
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          {isSidebarOpen ? (
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          ) : (
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          )}
+        </svg>
+      </button>
+
+      {/* Overlay pour fermer le menu sur mobile */}
+      {isSidebarOpen && (
+        <div 
+          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+          onClick={() => setIsSidebarOpen(false)}
+        ></div>
+      )}
+
       {/* Sidebar */}
-      <div className="w-64 bg-gray-800 dark:bg-gray-900 text-white p-6 space-y-6 flex flex-col">
+      <div className={`lg:w-56 bg-gray-800 dark:bg-gray-900 text-white p-6 space-y-6 flex flex-col fixed lg:relative h-screen z-40 transition-all duration-300 transform ${
+        isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full w-0 lg:translate-x-0 lg:w-56'
+      } overflow-hidden`}>
         {/* Logo EDF */}
         <div className="flex justify-center mb-4">
           <img src="/logo-edf.png" alt="Logo EDF" className="h-20 w-auto" />
@@ -141,19 +166,21 @@ const DocumentManager: React.FC = () => {
       </div>
 
       {/* Contenu Principal */}
-      <div className="flex-grow p-6 md:p-12">
-        <div className="mb-6">
+      <div className="flex-grow p-4 md:p-6 lg:ml-0 overflow-x-hidden">
+        <div className="mb-6 mt-8 lg:mt-0 max-w-7xl mx-auto">
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Gestion Documentaire</h1>
           <p className="text-gray-600 dark:text-gray-400">Organisez et accédez à vos documents</p>
         </div>
 
-        {dataInitialized ? (
-          <FileExplorer userId={userId} />
-        ) : (
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <p className="text-gray-700">Initialisation des données en cours...</p>
-          </div>
-        )}
+        <div className="max-w-7xl mx-auto">
+          {dataInitialized ? (
+            <FileExplorer userId={userId} />
+          ) : (
+            <div className="bg-white p-4 rounded-lg shadow-md">
+              <p className="text-gray-700">Initialisation des données en cours...</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
