@@ -7,6 +7,7 @@ interface FileListProps {
   uploadProgress: { [key: string]: number };
   onFileDownload: (file: FileType) => void;
   onFileDelete: (file: FileType) => void;
+  onShowComments?: (file: FileType) => void;
   viewMode?: 'list' | 'grid';
 }
 
@@ -15,6 +16,7 @@ const FileList: React.FC<FileListProps> = ({
   uploadProgress, 
   onFileDownload, 
   onFileDelete,
+  onShowComments,
   viewMode = 'list'
 }) => {
   const formatFileSize = (bytes: number): string => {
@@ -102,6 +104,43 @@ const FileList: React.FC<FileListProps> = ({
     );
   }
 
+  // Mise à jour du rendu des actions dans la vue liste
+  const renderFileActions = (file: FileType) => (
+    <div className="flex justify-end space-x-2">
+      <button
+        onClick={() => onFileDownload(file)}
+        className="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300"
+        title="Télécharger"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+        </svg>
+      </button>
+
+      {onShowComments && (
+        <button
+          onClick={() => onShowComments(file)}
+          className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-300"
+          title="Commentaires"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+          </svg>
+        </button>
+      )}
+
+      <button
+        onClick={() => onFileDelete(file)}
+        className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300"
+        title="Supprimer"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+        </svg>
+      </button>
+    </div>
+  );
+
   return (
     <div>
       <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-3">Fichiers</h3>
@@ -178,24 +217,7 @@ const FileList: React.FC<FileListProps> = ({
                     {formatDate(file.dateUpload)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button
-                      onClick={() => onFileDownload(file)}
-                      className="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300 mr-4"
-                      title="Télécharger"
-                    >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                      </svg>
-                    </button>
-                    <button
-                      onClick={() => onFileDelete(file)}
-                      className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300"
-                      title="Supprimer"
-                    >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                      </svg>
-                    </button>
+                    {renderFileActions(file)}
                   </td>
                 </tr>
               ))}
@@ -208,42 +230,14 @@ const FileList: React.FC<FileListProps> = ({
       {viewMode === 'grid' && files.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {files.map(file => (
-            <div key={file.id} className="bg-white dark:bg-gray-700 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-600 hover:shadow-lg transition-shadow">
-              <div className="p-4 flex flex-col h-full">
-                <div className="flex-grow flex flex-col items-center justify-center py-4">
-                  {getFileIcon(file.type)}
-                  <h4 className="mt-3 text-sm font-medium text-gray-900 dark:text-white text-center">
-                    {file.nom.length > 20 ? `${file.nom.substring(0, 20)}...` : file.nom}
-                  </h4>
-                  <span className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                    {formatFileSize(file.taille)}
-                  </span>
-                  <span className="mt-1 uppercase text-xs inline-block px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-600 text-gray-800 dark:text-gray-200">
-                    {file.type}
-                  </span>
-                </div>
-                <div className="mt-auto pt-3 border-t border-gray-200 dark:border-gray-600 flex justify-between">
-                  <button
-                    onClick={() => onFileDownload(file)}
-                    className="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300"
-                    title="Télécharger"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                    </svg>
-                  </button>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">
-                    {formatDate(file.dateUpload)}
-                  </span>
-                  <button
-                    onClick={() => onFileDelete(file)}
-                    className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300"
-                    title="Supprimer"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                    </svg>
-                  </button>
+            <div key={file.id} className="bg-white dark:bg-gray-700 p-4 rounded-lg shadow border border-gray-200 dark:border-gray-600 hover:shadow-md transition-shadow">
+              <div className="flex flex-col items-center">
+                {getFileIcon(file.type)}
+                <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">{file.nom}</h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{formatFileSize(file.taille)}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">{formatDate(file.dateUpload)}</p>
+                <div className="mt-2 flex justify-center space-x-2">
+                  {renderFileActions(file)}
                 </div>
               </div>
             </div>

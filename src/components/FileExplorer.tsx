@@ -2,12 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db, storage } from '../firebaseConfig';
 import { collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage';
-import Breadcrumb from '../components/Breadcrumb';
-import FolderList from '../components/FolderList';
-import FileList from '../components/FileList';
-import SearchBar from '../components/SearchBar';
 import { FolderType, FileType } from '../types/documentTypes';
-import UploadButton from '../components/UploadButton';
 import CameraCapture from './CameraCapture';
 import CommentPanel from '../components/CommentPanel';
 
@@ -21,11 +16,9 @@ type ViewMode = 'list' | 'grid';
 
 const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
   const [currentPath, setCurrentPath] = useState<string>('');
-  const [breadcrumbItems, setBreadcrumbItems] = useState<{ id: string; name: string; path: string }[]>([]);
   const [folders, setFolders] = useState<FolderType[]>([]);
   const [files, setFiles] = useState<FileType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [uploadProgress, setUploadProgress] = useState<{ [key: string]: number }>({});
   const [error, setError] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<FileType[]>([]);
@@ -103,27 +96,7 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
       } as FileType));
       setFiles(filesData);
 
-      // Mettre à jour le fil d'Ariane
-      if (currentPath) {
-        const pathParts = currentPath.split('/');
-        let cumulativePath = '';
-        const items = await Promise.all(
-          pathParts.map(async (part, index) => {
-            cumulativePath = index === 0 ? part : `${cumulativePath}/${part}`;
-            // Rechercher les informations du dossier par son chemin
-            const folderSnap = await getDocs(query(collection(db, 'dossiers'), where('path', '==', cumulativePath)));
-            const folderData = folderSnap.docs[0]?.data();
-            return { 
-              id: part, 
-              name: folderData?.nom || part, 
-              path: cumulativePath 
-            };
-          })
-        );
-        setBreadcrumbItems([{ id: 'root', name: 'Accueil', path: '' }, ...items]);
-      } else {
-        setBreadcrumbItems([{ id: 'root', name: 'Accueil', path: '' }]);
-      }
+      // Suppression du code relatif à breadcrumbItems
     } catch (err) {
       console.error('Erreur lors du chargement des dossiers et fichiers:', err);
       setError('Impossible de charger les données. Veuillez réessayer plus tard.');
@@ -292,7 +265,6 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
         (snapshot) => {
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log(`Progression de l'upload pour ${file.name}: ${progress.toFixed(1)}%`);
-          setUploadProgress(prev => ({ ...prev, [file.name]: progress }));
         },
         (error) => {
           console.error('Erreur d\'upload détaillée:', error);
@@ -315,7 +287,6 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
           }
           
           setError(errorMessage);
-          setUploadProgress(prev => ({ ...prev, [file.name]: 0 }));
         },
         async () => {
           try {
@@ -350,17 +321,9 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
               ...doc.data()
             } as FileType));
             setFiles(filesData);
-            
-            // Nettoyer la progression
-            setUploadProgress(prev => {
-              const newProgress = { ...prev };
-              delete newProgress[file.name];
-              return newProgress;
-            });
           } catch (completeError) {
             console.error('Erreur lors de la finalisation de l\'upload:', completeError);
             setError(`Erreur lors de la finalisation de l'upload de ${file.name}. Le fichier a été téléchargé mais n'a pas pu être enregistré.`);
-            setUploadProgress(prev => ({ ...prev, [file.name]: 0 }));
           }
         }
       );
@@ -688,8 +651,44 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
         </div>
       </div>
       
+      {/* Barre de recherche */}
+      <div className="p-2 border-b border-gray-200 dark:border-gray-700">
+        <div className="relative">
+          <input
+            type="text"
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+            placeholder="Rechercher un fichier..."
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              handleSearch(e.target.value);
+            }}
+          />
+          <svg className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          {searchQuery && (
+            <button
+              onClick={clearSearch}
+              className="absolute right-3 top-2.5 h-5 w-5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+            >
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          )}
+        </div>
+      </div>
+      
       {/* Contenu principal */}
       <div className="flex-grow overflow-auto p-2">
+        {/* Affichage des erreurs */}
+        {error && (
+          <div className="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 p-4 mb-4 rounded shadow">
+            <p className="text-red-700 dark:text-red-400 text-sm">{error}</p>
+          </div>
+        )}
+        
         {isLoading ? (
           <div className="flex justify-center items-center h-full">
             <svg className="animate-spin h-10 w-10 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -823,6 +822,7 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                               </svg>
                             </button>
+                            
                             <button 
                               onClick={() => handleDownloadFile(file)}
                               className="text-green-600 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300"
@@ -914,6 +914,7 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                           </svg>
                         </button>
+                        
                         <button 
                           onClick={() => handleDownloadFile(file)}
                           className="text-green-600 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300"
@@ -940,8 +941,29 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
         )}
       </div>
 
-      {/* Modal de création de dossier */}
-      {/* Reste du code */}
+      {/* Panneau de commentaires */}
+      {showComments && selectedFile && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-11/12 md:w-3/4 h-5/6 flex flex-col">
+            <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-700">
+              <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+                Commentaires sur {selectedFile.nom}
+              </h2>
+              <button
+                onClick={() => setShowComments(false)}
+                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            <div className="flex-grow">
+              <CommentPanel documentId={selectedFile.id} documentNom={selectedFile.nom} />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Afficher la caméra si nécessaire */}
       {showCamera && (
@@ -952,87 +974,55 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ userId }) => {
         />
       )}
 
-      {showComments && selectedFile && (
-        <div className="fixed inset-0 z-50 overflow-hidden flex">
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" 
-                 onClick={() => setShowComments(false)}></div>
-            <div className="fixed inset-y-0 right-0 max-w-full flex">
-              <div className="relative w-screen max-w-md">
-                <div className="h-full flex flex-col bg-white dark:bg-gray-800 shadow-xl overflow-y-auto">
-                  <button
-                    onClick={() => setShowComments(false)}
-                    className="absolute top-0 right-0 m-4 text-gray-400 hover:text-gray-500"
-                    aria-label="Fermer"
-                  >
-                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                  <CommentPanel 
-                    documentId={selectedFile.id} 
-                    documentNom={selectedFile.nom} 
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-// Composant pour le bouton de création de dossier
-const NewFolderButton: React.FC<{ onCreateFolder: (name: string) => void }> = ({ onCreateFolder }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [folderName, setFolderName] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (folderName.trim()) {
-      onCreateFolder(folderName.trim());
-      setFolderName('');
-      setIsModalOpen(false);
-    }
-  };
-
-  return (
-    <>
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center"
-      >
-        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-        </svg>
-        Nouveau dossier
-      </button>
-
-      {isModalOpen && (
+      {/* Modal de création de dossier */}
+      {createFolderModalOpen && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-md">
-            <h3 className="text-lg font-semibold mb-4 dark:text-white">Créer un nouveau dossier</h3>
-            <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                value={folderName}
-                onChange={(e) => setFolderName(e.target.value)}
-                placeholder="Nom du dossier"
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                autoFocus
-              />
-              <div className="flex justify-end space-x-2">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Créer un nouveau dossier</h3>
+              <button 
+                onClick={() => setCreateFolderModalOpen(false)}
+                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              const input = e.currentTarget.elements.namedItem('folderName') as HTMLInputElement;
+              if (input && input.value.trim()) {
+                handleCreateFolder(input.value.trim());
+                setCreateFolderModalOpen(false);
+              }
+            }}>
+              <div className="mb-4">
+                <label htmlFor="folderName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Nom du dossier
+                </label>
+                <input
+                  type="text"
+                  id="folderName"
+                  name="folderName"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                  autoFocus
+                  required
+                />
+              </div>
+              
+              <div className="flex justify-end space-x-3">
                 <button
                   type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white"
+                  onClick={() => setCreateFolderModalOpen(false)}
+                  className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
                 >
                   Annuler
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   Créer
                 </button>
@@ -1041,7 +1031,7 @@ const NewFolderButton: React.FC<{ onCreateFolder: (name: string) => void }> = ({
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
